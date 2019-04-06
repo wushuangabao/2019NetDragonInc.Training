@@ -1,0 +1,3 @@
+﻿  task2.cpp
+c:\users\wha\desktop\2019netdragoninc.training\week1c++\task2\myproject\task2\task2.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  task2.vcxproj -> C:\Users\WHA\Desktop\2019NetDragonInc.Training\week1C++\task2\myproject\Debug\task2.exe
