@@ -56,30 +56,29 @@ void CRole::jump()
 	cout << headIcon << " starts to jump.\n";
 }
 
-void CRole::jumpEnd()
-{
+void CRole::jumpEnd(){
 	jumping = false;
 	cout << headIcon << " finishs jumping.\n";
 }
 
-void CRole::getWeapon(Weapon& wp)
-{
+void CRole::getWeapon(Weapon& wp){
+	// 取消原有的武器效果
+	if (weapon != NULL) {
+		BaoJi -= weapon->BaoJi;
+		ATK -= weapon->ATK;
+	}
+	// 增添新的武器效果
 	BaoJi += wp.BaoJi;
 	ATK += wp.ATK;
-	if (BaoJi > 100) BaoJi = 100;
 	cout << headIcon << " gets a weapon named " << wp.name << ", his ATK and BaoJiLv increase!" << endl;
 	coutAtkDef();
 }
 
-void CRole::atkWeapon(CRole& role, int seed)
-{
-	if (weapon != NULL) {
-		ATK = ATK + weapon->ATK;
-	}
-
+void CRole::atkWeapon(CRole& role, int seed){
 	// 被跳跃躲开
 	if (role.jumping) {
 		cout << headIcon << " attcks physically! But miss." << endl;
+		skillATK = -ATK; //通过skillATK减少1倍伤害量，制造躲避效果
 		return;
 	}
 
@@ -88,7 +87,7 @@ void CRole::atkWeapon(CRole& role, int seed)
 	srand((unsigned int)(seed));  //获取随机数种子
 	int n = rand() % 100;  //n是0-99中的随机数
 	if (n < BaoJi) {
-		skillATK = ATK;  //通过skillATK增加1倍伤害量
+		skillATK = ATK;  //通过skillATK增加1倍伤害量，制造暴击效果
 		cout << headIcon << " attcks physically and it's a BaoJi!" << endl;
 	}
 	else {
