@@ -1,15 +1,19 @@
 这是一个有关**我参加19年网龙公司线上训练营**的项目，将在一个月的时间内，通过完成一个个**阶段性任务**，快速入门C++和U3D。
 
+这份文档会记录所有的任务（分为C++和Unity3D两部分），目前更新至第一阶段。
+
 **记住：**在做任务中遇到问题，通常的解决途径是**搜索引擎**。搜索，并不是为了去copy一个现成的解决方案，而主要是为了去**理解方案背后的原理**。
 
-**其他链接：**
+友情链接：
 
-- 18年C++入门课程[我做的笔记整理](https://wushuangabao.github.io/Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
+- 菜鸟教程的[C++文档](http://www.runoob.com/cplusplus/cpp-tutorial.html)，专为初学者打造
+- 参加18年C++训练营时[我做的笔记整理](https://wushuangabao.github.io/Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
+- 微软Visual Studio的[C++语言reference](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference)
 
-# 1. 任务目录
+# 1. 目录
 
 
-- [1. 任务目录](#1-任务目录)
+- [1. 目录](#1-目录)
 - [2. C++](#2-c)
     - [2.1. 语言基础](#21-语言基础)
         - [2.1.1. 题目](#211-题目)
