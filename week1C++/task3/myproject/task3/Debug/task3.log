@@ -1,2 +1,3 @@
 ﻿  task3.cpp
-  task3.vcxproj -> C:\Users\WHA\Desktop\2019NetDragonInc.Training\week1C++\task3\task3\Debug\task3.exe
+c:\users\wha\desktop\2019netdragoninc.training\week1c++\task3\myproject\task3\list.h(238): warning C4715: “List<int>::findTheNum”: 不是所有的控件路径都返回值
+  task3.vcxproj -> C:\Users\WHA\Desktop\2019NetDragonInc.Training\week1C++\task3\myproject\Debug\task3.exe

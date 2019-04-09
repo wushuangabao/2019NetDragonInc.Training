@@ -1,27 +1,26 @@
-﻿#include "DataType.h"
-#include "List.h"
+﻿#include "List.h"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-	DataType* datas = new DataType[20];  //数据数组
-	List list1;
+	DataType<int>* datas = new DataType<int>[20];  //数据数组
+	List<int> list1;
 
 	cout << "Start to push datas to list1..." << endl << endl;
 	for (int i = 0; i < 20; i++)
 	{
-		DataType data(100 - i);
+		DataType<int> data(100 - i);
 		*(datas + i) = data;
 		list1.add(*(datas + i));
 	}
 
 	cout << "Start to create list2 based on list1..." << endl << endl;
-	List list2 = list1;
+	List<int> list2 = list1;
 
 	cout << "Get the second data of list1: ";
-	DataType* dataa = list1.findByNum(2); //取第2个元素，同时list.p也指向了该元素
+	DataType<int>* dataa = list1.findByNum(2); //取第2个元素，同时list.p也指向了该元素
 	int d = list1.p->getData();
 	cout << d << endl << endl;
 
@@ -66,9 +65,7 @@ int main()
 	}
 	cout << endl << endl;
 
-	int in;
-	cout << "Input any integer to quit." << endl;
-	cin >> in;
+	system("pause");
 	delete[] datas;
 	return 0;
 }
