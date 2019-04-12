@@ -6,12 +6,6 @@
 
 另外，本项目每个阶段(week)的文件夹里都有一份README说明文档。
 
-友情链接：
-
-- 菜鸟教程的[C++文档](http://www.runoob.com/cplusplus/cpp-tutorial.html)，专为初学者打造
-- 参加18年C++训练营时[我做的笔记整理](https://wushuangabao.github.io/Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
-- 微软Visual Studio的[C++语言reference](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference)
-
 # 1. 目录
 
 
@@ -53,6 +47,12 @@
 这一部分任务属于C++。
 
 **诚信要求**：请按自己的思路进行设计和开发，不可抄袭其他人作品（包括网络上的），否则按作弊处理（0分）。
+
+友情链接：
+
+- 菜鸟教程的[C++文档](http://www.runoob.com/cplusplus/cpp-tutorial.html)，专为初学者打造
+- 参加18年C++训练营时[我做的笔记整理](https://wushuangabao.github.io/Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
+- 微软Visual Studio的[C++语言reference](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference)
 
 ## 2.1. 语言基础
 
