@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package commum;
+
+message Message {
+  required bytes  ipAddress = 1;
+  required bytes  message= 2;
+}

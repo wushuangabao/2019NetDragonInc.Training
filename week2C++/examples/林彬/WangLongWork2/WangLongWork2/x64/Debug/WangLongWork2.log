@@ -1,0 +1,9 @@
+﻿  CSocketBase.cpp
+c:\users\lin\documents\visual studio 2015\projects\wanglongwork2\wanglongwork2\socket\csocketbase.cpp(53): warning C4244: “return”: 从“SOCKET”转换到“int”，可能丢失数据
+c:\users\lin\documents\visual studio 2015\projects\wanglongwork2\wanglongwork2\socket\csocketbase.cpp(69): warning C4244: “return”: 从“SOCKET”转换到“int”，可能丢失数据
+  main.cpp
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(864): warning C4800: “google::protobuf::internal::AtomicWord”: 将值强制为布尔值“true”或“false”(性能警告)
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(868): warning C4800: “google::protobuf::internal::Atomic64”: 将值强制为布尔值“true”或“false”(性能警告)
+  正在生成代码...
+  WangLongWork2.vcxproj -> C:\Users\Lin\Documents\Visual Studio 2015\Projects\WangLongWork2\x64\Debug\WangLongWork2.exe
+  WangLongWork2.vcxproj -> C:\Users\Lin\Documents\Visual Studio 2015\Projects\WangLongWork2\x64\Debug\WangLongWork2.pdb (Full PDB)

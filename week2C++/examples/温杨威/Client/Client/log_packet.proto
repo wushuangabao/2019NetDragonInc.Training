@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+message log_packet {
+  required fixed64 log_len =1;
+  required string packet_rec_ip =2;
+  required string log_level=3;
+  required bytes send_user_name=4;
+  required bytes log_msg = 5;
+  }
