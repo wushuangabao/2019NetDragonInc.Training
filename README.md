@@ -140,6 +140,8 @@ f)	“==”运算符
 
 ## 2.2. 网络编程
 
+![阶段一任务卡片图](https://wushuangabao.github.io/img/netdragon/c2.png)
+
 ### 2.2.1. 题目
 
 实现客户端和服务器之间通过Socket进行双向通信，协议数据采用XML或者Json封装。**最终实现一个简单的聊天系统**。
