@@ -27,9 +27,6 @@
     <ClCompile Include="ThreadLibFunctions.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Proto\data.pb.cc">
-      <Filter>头文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Socket\Platform.h">
@@ -39,9 +36,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Socket\TCPSocket.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Proto\data.pb.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Thread\ThreadException.h">

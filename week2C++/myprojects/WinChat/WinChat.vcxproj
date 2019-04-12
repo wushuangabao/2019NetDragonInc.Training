@@ -23,7 +23,7 @@
     <ProjectGuid>{3594959C-59E8-402E-B402-58C458BDF2E9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WinChat</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PROTOBUF_USE_DLLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>E:\MyCodes\Cpp\WinChat\WinChat\Proto;E:\MyCodes\Cpp\WinChat\WinChat\Socket;E:\MyCodes\Cpp\WinChat\WinChat\Thread;E:\MyCodes\Cpp\WinChat\WinChat\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,14 +146,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Proto\data.pb.cc" />
     <ClCompile Include="SocketList.cpp" />
     <ClCompile Include="TCPSocket.cpp" />
     <ClCompile Include="ThreadLibFunctions.cpp" />
     <ClCompile Include="WinChat.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Proto\data.pb.h" />
     <ClInclude Include="Socket\Platform.h" />
     <ClInclude Include="Socket\SocketList.h" />
     <ClInclude Include="Socket\TCPSocket.h" />

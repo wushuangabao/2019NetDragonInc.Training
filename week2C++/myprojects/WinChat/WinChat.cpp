@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <tchar.h>
-#include "TCPSocket.h"
-#include "SocketList.h"
-#include "ThreadLib.h"
+#include "Socket/TCPSocket.h"
+#include "Socket/SocketList.h"
+#include "Thread/ThreadLib.h"
 
 #pragma comment( lib, "Lib\\libprotobuf-lited.lib" )
 #pragma comment( lib, "Lib\\libprotobufd.lib" )
