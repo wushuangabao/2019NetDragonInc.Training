@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mymsg;
+
+message msg {
+  required string data = 1;
+  enum Type {
+    SENDMSG = 0;
+    DISCONNECT = 1;
+  }
+  required Type type = 2 [default = SENDMSG];
+}

@@ -1,0 +1,4 @@
+﻿  main.cpp
+d:\wlprotobuf\protobuf-3.5.1\src\google\protobuf\wire_format_lite.h(863): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+d:\wlprotobuf\protobuf-3.5.1\src\google\protobuf\wire_format_lite.h(874): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+  Client.vcxproj -> D:\VSproject\第6组-温扬威-福建师范大学-第2阶段作业\Client\x64\Debug\Client.exe

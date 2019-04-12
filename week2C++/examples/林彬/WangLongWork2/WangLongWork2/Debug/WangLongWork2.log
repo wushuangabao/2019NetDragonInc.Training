@@ -1,0 +1,16 @@
+﻿  CTcpServer.cpp
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(864): warning C4800: “google::protobuf::internal::AtomicWord”: 将值强制为布尔值“true”或“false”(性能警告)
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(868): warning C4800: “google::protobuf::internal::Atomic32”: 将值强制为布尔值“true”或“false”(性能警告)
+  commun.pb.cc
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(864): warning C4800: “google::protobuf::internal::AtomicWord”: 将值强制为布尔值“true”或“false”(性能警告)
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(868): warning C4800: “google::protobuf::internal::Atomic32”: 将值强制为布尔值“true”或“false”(性能警告)
+  CMsgManger.cpp
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(864): warning C4800: “google::protobuf::internal::AtomicWord”: 将值强制为布尔值“true”或“false”(性能警告)
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(868): warning C4800: “google::protobuf::internal::Atomic32”: 将值强制为布尔值“true”或“false”(性能警告)
+  正在生成代码...
+  正在编译...
+  main.cpp
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(864): warning C4800: “google::protobuf::internal::AtomicWord”: 将值强制为布尔值“true”或“false”(性能警告)
+d:\protobuf-3.3.0\src\google\protobuf\io\coded_stream.h(868): warning C4800: “google::protobuf::internal::Atomic32”: 将值强制为布尔值“true”或“false”(性能警告)
+  正在生成代码...
+libprotobufd.lib(common.cc.obj) : fatal error LNK1112: 模块计算机类型“x64”与目标计算机类型“X86”冲突

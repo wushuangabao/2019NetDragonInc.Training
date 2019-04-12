@@ -1,0 +1,14 @@
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\bin\Debug\WindowsFormsClient.exe.config
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\bin\Debug\WindowsFormsClient.exe
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\bin\Debug\WindowsFormsClient.pdb
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.csprojResolveAssemblyReference.cache
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.FClient.resources
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.Properties.Resources.resources
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.csproj.GenerateResource.Cache
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.exe
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.pdb
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\bin\Debug\protobuf-net.dll
+C:\Users\Lin\Documents\Visual Studio 2015\Projects\WindowsFormsClient\WindowsFormsClient\bin\Debug\protobuf-net.xml
+C:\Users\Lin\Desktop\第九组-林彬-福州大学-第二阶段作业\WindowsFormsClient\WindowsFormsClient\bin\Debug\WindowsFormsClient.exe.config
+C:\Users\Lin\Desktop\第九组-林彬-福州大学-第二阶段作业\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.exe
+C:\Users\Lin\Desktop\第九组-林彬-福州大学-第二阶段作业\WindowsFormsClient\WindowsFormsClient\obj\Debug\WindowsFormsClient.pdb

@@ -1,0 +1,10 @@
+syntax="proto2";
+
+package chat;
+
+message  data{
+    repeated  bytes  nameinnumber = 1;
+    optional  bytes  name = 2;
+    optional  bytes  str = 3;
+    optional  bytes  ins = 4;
+}
