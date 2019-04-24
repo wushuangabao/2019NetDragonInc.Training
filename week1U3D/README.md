@@ -23,7 +23,7 @@
 ## 1. 准备
 
 - 首先安装好IDE工具[Visual Studio](https://visualstudio.microsoft.com/zh-hans/vs/)
-- 下载并配置好MySQL数据库（推荐使用XAMPP或WampServer这样的整合软件包来安装，具体参见[实战部分](#实战)我的记录）
+- 下载并配置好MySQL数据库（推荐使用XAMPP或WampServer这样的整合软件包来安装，具体参见[实战部分](#5-实战)我的记录）
 - 下载MySQL的.NET Connector
 
 ## 2. 题目
