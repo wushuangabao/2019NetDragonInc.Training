@@ -157,11 +157,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ConnPool.h" />
     <ClInclude Include="CSql.h" />
     <ClInclude Include="DB.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConnPool.cpp" />
     <ClCompile Include="CSql.cpp" />
     <ClCompile Include="DB.cpp" />
     <ClCompile Include="myproject.cpp" />
