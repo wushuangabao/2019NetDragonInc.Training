@@ -1,9 +1,8 @@
 ﻿#include "pch.h"
-#include <iostream>
-#include <winsock.h>
-#include <mysql.h>
+#pragma comment(lib,"libmySQL.lib")
 
 using namespace std;
+
 int main()
 {
 	MYSQL *pConn;                    //定义一个结构体指针
@@ -17,7 +16,6 @@ int main()
 	else
 	{
 		cout << "连接数据库成功" << endl;
-
 	}
 	mysql_query(pConn, "set names gbk");//设置一下编码问题
 

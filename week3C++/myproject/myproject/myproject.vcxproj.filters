@@ -18,12 +18,24 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CSql.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="myproject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSql.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DB.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

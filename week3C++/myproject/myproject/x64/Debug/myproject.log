@@ -1,2 +1,5 @@
-﻿  myproject.cpp
+﻿  pch.cpp
+  CSql.cpp
+  myproject.cpp
+  正在生成代码...
   myproject.vcxproj -> C:\Users\WHA\Desktop\2019NetDragonInc.Training\week3C++\myproject\x64\Debug\myproject.exe
