@@ -1,16 +1,13 @@
 ﻿/*
  Navicat Premium Data Transfer
-
  Source Server         : testdb
  Source Server Type    : MySQL
  Source Server Version : 50714
  Source Host           : localhost:3306
  Source Schema         : gamedb
-
  Target Server Type    : MySQL
  Target Server Version : 50714
  File Encoding         : 65001
-
  Date: 22/06/2018 15:40:35
 */
 
