@@ -1,0 +1,7 @@
+1.需要频繁使用的对象，不要在Update中执行GetComponent和GameObject.Find，在Start或Awake中执行并保存成成员。
+
+2.暴露到编辑器的参数在使用时要判断空值，Instantiate和GetCompnent后的获取的对象要判断空值。
+
+3.逻辑相似的地方要封装成函数，例如：点击丢泥巴和自动丢泥巴要把公共的丢泥巴逻辑封装成函数。
+
+4.还是变量的命名问题，不要出现类似newObject之类的命名。
