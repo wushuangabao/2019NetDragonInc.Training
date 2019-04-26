@@ -1,62 +1,58 @@
 #include "pch.h"
+#include "CSql.h"
 #include "ConnPool.h"
-#include "mysql_connect.h"
 
 using namespace std;
 
 ConnPool* ConnPool::pool = nullptr;
 
 // 构造函数(private)
-ConnPool::ConnPool(string name, string pwd, string nurl, int maxSize) :	username(name), password(pwd), url(nurl), poolSize(maxSize)
+ConnPool::ConnPool(DB* db, int maxSize)
+	: poolSize(maxSize)
 {
-	driver = get_driver_instance(); //获取mysql驱动
-	lock_guard<mutex> locker(lock); //加锁（变量析构时自动解锁）
-	addConn(poolSize);              //增添连接
+	// 加锁（变量析构时自动解锁）
+	lock_guard<mutex> locker(lock);
+
+	// 创建poolSize个连接
+	for (int i = 0; i < poolSize; ++i)
+	{
+		CSql* p = new CSql(db);
+		conList.push_back(p);
+	}
 }
 
 // 销毁连接池
 ConnPool::~ConnPool()
 {
-	for (auto &conn : conList)
+	for (auto p : conList)
 	{
-		// 依次转移所有权，出作用域时，关闭连接，出作用域时智能指针自动释放
-		shared_ptr<Connection> &&sp = move(conList.front());
-		sp->close();
+		delete p;
 	}
+	pool = nullptr;
+	cout << "连接池已销毁！" << endl;
 }
 
-int ConnPool::getPoolSize()
+size_t ConnPool::getPoolSize()
 {
 	return conList.size();
 }
 
-void ConnPool::addConn(int size)
-{
-	for (int i = 0; i < size; ++i)
-	{
-		// 创建连接
-		Connection *conn = driver->connect(url, username, password);
-		shared_ptr<Connection> sp(conn, [](Connection *conn) {	delete conn; });
-		conList.push_back(move(sp));
-	}
-}
-
-ConnPool* ConnPool::getInstance()
+ConnPool* ConnPool::getInstance(DB* db, int size)
 {
 	if (pool == nullptr)
-		pool = new ConnPool("root", "", "127.0.0.1:3306", 10); //创建10个连接
+		pool = new ConnPool(db, size);
 	return pool;
 }
 
-shared_ptr<Connection> ConnPool::getConnect()
+CSql* ConnPool::getConnect()
 {
 	lock_guard<mutex> locker(lock);
-	shared_ptr<Connection> sp = conList.front();
+	CSql* p = conList.front();
 	conList.pop_front();
-	return sp;
+	return p;
 }
 
-void ConnPool::retConnect(shared_ptr<Connection> &ret)
+void ConnPool::retConnect(CSql* ret)
 {
 	lock_guard<mutex>locker(lock);
 	conList.push_back(ret);

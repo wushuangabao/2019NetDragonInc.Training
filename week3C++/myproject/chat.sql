@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-25 15:11:55
+Date: 2019-04-26 22:48:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,11 +36,11 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('user','wander','admin') NOT NULL DEFAULT 'wander' COMMENT '角色类型：用户，游客，管理员',
-  `user_id` int(15) unsigned NOT NULL,
+  `user_name` char(31) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_id` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `user_name` (`user_name`) USING BTREE,
+  CONSTRAINT `user_name` FOREIGN KEY (`user_name`) REFERENCES `user` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -48,8 +48,8 @@ CREATE TABLE `role` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` char(31) DEFAULT NULL,
+  `user_name` char(31) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `user_name` (`user_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;

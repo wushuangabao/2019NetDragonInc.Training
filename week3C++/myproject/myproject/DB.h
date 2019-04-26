@@ -1,41 +1,47 @@
 #pragma once
 
-#include <string>
 using namespace std;
 
-// 角色类型：游客，用户，管理员
-enum role_type { wander, user, admin };
+class CSql;
+class ConnPool;
+
+// 角色类型：用户，游客，管理员
+enum RoleType { user, wander, admin };
 
 class DB
 {
 public:
-	char user[20] = "root";
-	char passwd[20] = "";
-	char ip[20] = "localhost";
-	char dbname[10] = "chat";
-
-	// 连接池
-	MYSQL* con;
-
-	// 记录下一条聊天消息的id
-	unsigned int msg_id = 1;
-
-	DB();
 	~DB();
-	
-	void query(string tablename);  //查询数据
-	void insert(string tablename);  //添加数据
-	void delet(string tablename);  //删除数据
-	void update(string tablename);  //更改数据
 
-	bool sql(string sql);  //调用sql语句(只能1句)
-	bool transc1(char* name, char* pswd, unsigned int sex, char* act);  //事务处理1：创建people账户，选择actor角色
+	// 获取单例对象
+	static DB* getInstance();
+
+	// 创建user账户
+	bool createAccount(string name);
+	// 修改用户名
+	bool changeUserName(string newname, string oldname);
+	// 删除某用户
+	bool deleteUser(string name);
+	// 输出所有表
+	void printAllTable();
 
 private:
-	MYSQL* connect();  //建立连接
+	// SQL操作类
+	friend CSql;
 
-	string roleOf(string user); //查询某个user的角色
-	string getTime();  //获取系统时间
-	bool CreAcc(char* name, char* pswd, unsigned int sex); //创建people表记录（创建账户）,preparestatement
-	void openAutoCommit();  //开启自动提交事务
+	// 数据库
+	DB();
+	static DB* db;
+	string username = "root";
+	string passwd = "";
+	string ip = "localhost";
+	string dbname = "chat";
+	int port = 3306;
+
+	// 连接池
+	ConnPool* pool;
+	int poolSize = 5; //大小为5
+	
+	// 获取系统时间
+	string getTime();
 };

@@ -1,52 +1,33 @@
 #pragma once
 
-//c++
-#include <iostream>
-#include <string>
 #include <list>
-#include <memory>
-#include <functional>
-
-//mysql driver
-#include <mysql_driver.h>
-#include <mysql_connection.h>
-
-//mysql execute
-#include <cppconn/driver.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
-#include <cppconn/resultset.h>
-#include <exception>
-
-//thread mutex 
 #include <mutex>
 
-using namespace sql;
 using namespace std;
+
+class DB;
+class CSql;
 
 class ConnPool
 {
 public:
 	// 获取数据库连接池对象
-	static ConnPool* getInstance();
+	static ConnPool* getInstance(DB* db, int size);
 	// 得到一条连接
-	shared_ptr<Connection> getConnect();
+	CSql* getConnect();
 	// 归还一条连接
-	void retConnect(shared_ptr<Connection> &ret);
+	void retConnect(CSql* ret);
+	// 获取连接池的剩余连接数
+	size_t getPoolSize();
 
 	~ConnPool();
-	int getPoolSize();
 
 private:
 	static ConnPool *pool; //连接池对象
-	mutex lock;       //锁
-	Driver *driver;        //mysql driver
+	mutex lock;            //锁
 	int poolSize;          //连接池大小
-	string username;
-	string password;
-	string url;
-	list<shared_ptr<Connection>> conList; //连接队列
+	list<CSql*> conList;   //连接队列
 
-	ConnPool(string name, string pwd, string nurl, int maxSize);
-	void addConn(int size);
+	// 单例模式 构造函数
+	ConnPool(DB* db, int maxSize);
 };
