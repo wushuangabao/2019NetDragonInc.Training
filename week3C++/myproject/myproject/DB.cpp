@@ -162,14 +162,19 @@ bool DB::deleteUser(string name)
 	{
 		if (c->sql("start transaction;"))
 		{
-			string sql = "delete from user where(user_name='" + name + "');";
-			if (c->sql(sql))
-				if (c->commit())
-				{
-					c->openAutoCommit();
-					pool->retConnect(c);
-					return true;
-				}
+			string sql = "select * from user where(user_name='" + name + "');";
+			if (c->sql(sql)){
+				sql = "delete from user where(user_name='" + name + "');";
+				if (c->sql(sql))
+					if (c->commit())
+					{
+						c->openAutoCommit();
+						pool->retConnect(c);
+						return true;
+					}
+					else
+						c->rollBack();
+			}
 			else
 				c->rollBack();
 		}
