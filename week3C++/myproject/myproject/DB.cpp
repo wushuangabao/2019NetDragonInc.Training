@@ -164,16 +164,23 @@ bool DB::deleteUser(string name)
 		{
 			string sql = "select * from user where(user_name='" + name + "');";
 			if (c->sql(sql)){
-				sql = "delete from user where(user_name='" + name + "');";
-				if (c->sql(sql))
-					if (c->commit())
-					{
-						c->openAutoCommit();
-						pool->retConnect(c);
-						return true;
-					}
-					else
-						c->rollBack();
+				// 查询name是否存在
+				if(c->putOutRes(false)>0){
+					sql = "delete from user where(user_name='" + name + "');";
+					if (c->sql(sql))
+						if (c->commit())
+						{
+							c->openAutoCommit();
+							pool->retConnect(c);
+							return true;
+						}
+						else
+							c->rollBack();
+				}
+				else {
+					c->rollBack();
+					cout << "用户" << name << "不存在！" << endl;
+				}
 			}
 			else
 				c->rollBack();

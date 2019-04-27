@@ -30,6 +30,11 @@ public:
 	// 事务提交
 	bool commit();
 
-	// 输出查询结果
-	void putOutRes();
+	/**
+	 * @brief 处理查询的结果
+	 *
+	 * @param b 是否输出到屏幕
+	 * @return 查询到的数据总数
+	 */
+	unsigned int putOutRes(bool b = true);
 };

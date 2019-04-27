@@ -110,40 +110,49 @@ bool CSql::commit()
 	return this->sql("commit;");
 }
 
-// 输出查询结果
-void CSql::putOutRes()
+// 输出查询结果，并返回查询到的数据总数
+unsigned int CSql::putOutRes(bool b)
 {
-	unsigned int t, count=0;
+	unsigned int t, j, count = 0;
 	MYSQL_RES *res = mysql_store_result(con);
 	MYSQL_ROW row;
 	MYSQL_FIELD *fd;    //字段列数组
 	list<string> field; //字段名队列
 	
-	// 获取字段名
-	for (int i = 0; fd = mysql_fetch_field(res); i++)
-		field.push_back(fd->name);
-	// 获取列数
-	int j = mysql_num_fields(res);
-	// 打印字段
-	for (int i = 0; i < j; i++) {
-		cout << field.front() << "\t";
-		field.pop_front();
-	}
-	cout << endl;
-
-	// 从当前结果集中获取数据，并滑向下一行，取到最后一行返回false
-	while (row = mysql_fetch_row(res))
+	if (b)
 	{
-		for (t = 0; t < j; t++)
-			if (row[t] == NULL)
-				cout << "NULL\t";
-			else
-				cout << row[t] << "\t";
-		count++;
+		// 获取字段名
+		for (int i = 0; fd = mysql_fetch_field(res); i++)
+			field.push_back(fd->name);
+		// 获取列数
+		j = mysql_num_fields(res);
+		// 打印字段
+		for (int i = 0; i < j; i++) {
+			cout << field.front() << "\t";
+			field.pop_front();
+		}
 		cout << endl;
 	}
-	cout << "数据总数：" << count << endl;
+
+		// 从当前结果集中获取数据，并滑向下一行，取到最后一行返回false
+	while (row = mysql_fetch_row(res))
+	{
+		if (b)
+		{
+			for (t = 0; t < j; t++)
+				if (row[t] == NULL)
+					cout << "NULL\t";
+				else
+					cout << row[t] << "\t";
+		    cout << endl;
+	    }
+		count++;
+	}
+	if(b)
+	    cout << "查询结果总数：" << count << endl;
 
 	// 释放结果集
 	mysql_free_result(res);
+
+	return count;
 }
