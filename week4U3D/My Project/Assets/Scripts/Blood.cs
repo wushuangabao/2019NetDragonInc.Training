@@ -43,5 +43,4 @@ public class Blood : MonoBehaviour
             timeShow = time;
         }
     }
-
 }

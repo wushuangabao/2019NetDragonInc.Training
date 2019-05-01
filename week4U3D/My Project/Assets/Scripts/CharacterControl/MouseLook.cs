@@ -57,7 +57,7 @@ public class MouseLook
     {
         lockCursor = value;
         if (!lockCursor)
-        {//we force unlock the cursor if the user disable the cursor locking helper
+        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -65,7 +65,6 @@ public class MouseLook
 
     public void UpdateCursorLock()
     {
-        //if the user set "lockCursor" we check & properly lock the cursos
         if (lockCursor)
             InternalLockUpdate();
     }
@@ -83,7 +82,9 @@ public class MouseLook
 
         if (m_cursorIsLocked)
         {
+            // 锁定鼠标在屏幕中心
             Cursor.lockState = CursorLockMode.Locked;
+            // 隐藏鼠标
             Cursor.visible = false;
         }
         else if (!m_cursorIsLocked)

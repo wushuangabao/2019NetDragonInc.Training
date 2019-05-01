@@ -5,58 +5,54 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(CharacterControl))]
 public class UserControl : MonoBehaviour
 {
+    // 是否具有人物控制权
+    public static bool currentControl = true;
+
     // 加入MouseLook功能
     [SerializeField] private MouseLook m_MouseLook;
 
-    private CharacterControl m_Character; // A reference to the ThirdPersonCharacter on the object
-    private Transform m_Cam;                  // A reference to the main camera in the scenes transform
-    private Vector3 m_CamForward;             // The current forward direction of the camera
+    private CharacterControl m_Character;
+    private Transform m_Cam;
+    private Vector3 m_CamForward;
     private Vector3 m_Move;
-    private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+    private bool m_Jump;
 
 
     private void Start()
     {
-        // get the transform of the main camera
-        if (Camera.main != null)
-        {
-            m_Cam = Camera.main.transform;
-        }
-        else
-        {
-            Debug.LogWarning(
-                "Warning: no main camera found. Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", gameObject);
-            // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
-        }
-
-        // get the third person character ( this should never be null due to require component )
+        m_Cam = Camera.main.transform;
         m_Character = GetComponent<CharacterControl>();
-
-        // 初始化MouseLook
         m_MouseLook.Init(transform, Camera.main.transform);
     }
 
 
     private void Update()
     {
-        // 更新MouseLook的角度
-        m_MouseLook.LookRotation(transform, Camera.main.transform);
-
-        if (!m_Jump)
+        if (currentControl)
         {
-            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            // 更新MouseLook的角度
+            m_MouseLook.LookRotation(transform, Camera.main.transform);
+
+            // 检测是否按下了跳跃键
+            if (!m_Jump)
+            {
+                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            }
         }
     }
 
 
-    // Fixed update is called in sync with physics
+    // 物理引擎中用FixedUpdate代替Update，它的时间固定，不受帧率影响
     private void FixedUpdate()
     {
-        // read inputs
+        if (!currentControl)
+            return;
+
+        // 读取输入
         float v = CrossPlatformInputManager.GetAxis("Vertical");
         bool crouch = Input.GetKey(KeyCode.C);
 
-        // calculate move direction to pass to character
+        // 计算角色移动的方向
         if (m_Cam != null)
         {
             // calculate camera relative direction to move:
@@ -65,15 +61,14 @@ public class UserControl : MonoBehaviour
         }
         else
         {
-            // we use world-relative directions in the case of no main camera
+            // use world-relative directions in the case of no main camera
             m_Move = v * Vector3.forward;
         }
-#if !MOBILE_INPUT
-        // walk speed multiplier
-        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-#endif
 
-        // pass all parameters to the character control script
+        // 按左Shift: 步行
+        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+
+        // 将参数传递到CharacterControl脚本
         m_Character.Move(m_Move, crouch, m_Jump);
         m_Jump = false;
 

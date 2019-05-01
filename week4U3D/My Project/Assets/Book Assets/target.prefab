@@ -409,9 +409,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ed044190f9ed4ca62068f662c65c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundWin: {fileID: 8300000, guid: 0265ac53b267e483a8b15f812c8328d4, type: 3}
   soundHit: {fileID: 8300000, guid: 0cf0edd99108843a5adbcbb9ace3f2f5, type: 3}
   soundReset: {fileID: 8300000, guid: 5ee80c3508b0e4334b66903c8f89797a, type: 3}
   timeReset: 1.5
+  cell_old: {fileID: 0}
+  cell_new: {fileID: 0}
 --- !u!82 &1332519587983601556
 AudioSource:
   m_ObjectHideFlags: 0
