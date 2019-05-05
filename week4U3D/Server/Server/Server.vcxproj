@@ -84,17 +84,20 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\mysql-5.7.25-winx64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\mysql-5.7.25-winx64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,6 +155,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Chat.h" />
+    <ClInclude Include="MySQL\ConnPool.h" />
+    <ClInclude Include="MySQL\CSql.h" />
+    <ClInclude Include="MySQL\DB.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Socket\json.hpp" />
     <ClInclude Include="Socket\Platform.h" />
     <ClInclude Include="Socket\SocketList.h" />
@@ -159,6 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="MySQL\ConnPool.cpp" />
+    <ClCompile Include="MySQL\CSql.cpp" />
+    <ClCompile Include="MySQL\DB.cpp" />
+    <ClCompile Include="pch.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket\SocketList.cpp" />
     <ClCompile Include="Socket\TCPSocket.cpp" />

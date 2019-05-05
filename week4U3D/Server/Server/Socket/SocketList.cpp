@@ -1,4 +1,3 @@
-#include <iostream>
 #include "SocketList.h"
 #include "json.hpp"
 #include "../Chat.h"

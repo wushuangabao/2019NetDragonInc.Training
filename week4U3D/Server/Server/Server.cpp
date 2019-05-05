@@ -1,4 +1,5 @@
-﻿#include "Chat.h"
+﻿#include "pch.h"
+#include "Chat.h"
 
 int main()
 {

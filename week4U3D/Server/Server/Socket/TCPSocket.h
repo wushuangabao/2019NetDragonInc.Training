@@ -1,8 +1,8 @@
 #ifndef TCPSOCKET_H
 #define TCPSOCKET_H
 
+#include "../pch.h"
 #include "Platform.h"
-#include <string>
 #include <Windows.h>
 
 class BaseSocket

@@ -1,6 +1,7 @@
 #ifndef SOCKETLIST_H
 #define SOCKETLIST_H
 
+#include "../pch.h"
 #include "TCPSocket.h"
 #include <list>
 
