@@ -1,3 +1,5 @@
+#include <mysql.h>
+
 #pragma once
 
 class DB;

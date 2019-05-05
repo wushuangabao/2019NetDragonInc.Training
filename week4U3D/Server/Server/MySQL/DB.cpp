@@ -1,7 +1,10 @@
 #include <time.h>
+#include <iostream>
 #include "DB.h"
 #include "CSql.h"
 #include "ConnPool.h"
+
+using namespace std;
 
 DB* DB::db = nullptr;
 

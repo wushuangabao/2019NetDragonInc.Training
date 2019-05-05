@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CSql.h"
 #include "ConnPool.h"
 
