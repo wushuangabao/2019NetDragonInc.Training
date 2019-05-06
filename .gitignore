@@ -2,3 +2,6 @@
 *.lnk
 *.db
 *.opendb
+*.ipch
+*.tlog
+*.obj

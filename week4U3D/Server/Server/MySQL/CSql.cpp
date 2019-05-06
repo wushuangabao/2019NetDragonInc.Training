@@ -1,4 +1,5 @@
 #include <mysql.h>
+#include <iostream>
 #include <list>
 #include "CSql.h"
 #include "DB.h"

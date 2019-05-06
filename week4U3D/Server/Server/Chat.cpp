@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "Socket/SocketList.h"
 #include "Socket/json.hpp"
 #include "Chat.h"
