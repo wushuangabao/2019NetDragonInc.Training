@@ -1,5 +1,3 @@
-#include "../pch.h"
-
 #pragma once
 
 using namespace std;

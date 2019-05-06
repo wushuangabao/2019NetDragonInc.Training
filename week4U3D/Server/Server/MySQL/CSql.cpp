@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include <mysql.h>
 #include <list>
 #include "CSql.h"
 #include "DB.h"

@@ -158,7 +158,6 @@
     <ClInclude Include="MySQL\ConnPool.h" />
     <ClInclude Include="MySQL\CSql.h" />
     <ClInclude Include="MySQL\DB.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Socket\json.hpp" />
     <ClInclude Include="Socket\Platform.h" />
     <ClInclude Include="Socket\SocketList.h" />
@@ -169,7 +168,6 @@
     <ClCompile Include="MySQL\ConnPool.cpp" />
     <ClCompile Include="MySQL\CSql.cpp" />
     <ClCompile Include="MySQL\DB.cpp" />
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket\SocketList.cpp" />
     <ClCompile Include="Socket\TCPSocket.cpp" />
