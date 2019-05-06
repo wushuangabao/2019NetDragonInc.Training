@@ -3,6 +3,7 @@
 
 #include "Platform.h"
 #include <Windows.h>
+#include <string>
 
 class BaseSocket
 {

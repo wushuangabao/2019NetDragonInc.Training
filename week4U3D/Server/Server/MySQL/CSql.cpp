@@ -135,7 +135,7 @@ unsigned int CSql::putOutRes(bool b)
 		cout << endl;
 	}
 
-		// 从当前结果集中获取数据，并滑向下一行，取到最后一行返回false
+	// 从当前结果集中获取数据，并滑向下一行，取到最后一行返回false
 	while (row = mysql_fetch_row(res))
 	{
 		if (b)

@@ -5,23 +5,19 @@ using UnityEngine.UI;
 public class TriggerThrow : MonoBehaviour
 {
     public Image star;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public GameObject pointEyes;
+    public GameObject pointCamera;
+    public Camera mainCamera;
+    public bool onTrigger = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (onTrigger && other.gameObject.tag == "Player")
         {
             CoconutThrower.canThrow = true;
             star.enabled = true;
+            mainCamera.transform.position = pointEyes.transform.position;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
@@ -29,8 +25,15 @@ public class TriggerThrow : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            CoconutThrower.canThrow = false;
-            star.enabled = false;
+            ExitThrow();
         }
+    }
+
+    public void ExitThrow()
+    {
+        CoconutThrower.canThrow = false;
+        star.enabled = false;
+        mainCamera.transform.position = pointCamera.transform.position;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

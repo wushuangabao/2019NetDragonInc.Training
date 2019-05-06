@@ -5,9 +5,6 @@ using namespace std;
 class CSql;
 class ConnPool;
 
-// 角色类型：用户，游客，管理员
-enum RoleType { user, wander, admin };
-
 class DB
 {
 public:
@@ -17,11 +14,12 @@ public:
 	static DB* getInstance();
 
 	// 创建user账户
-	bool createAccount(string name);
-	// 修改用户名
-	bool changeUserName(string newname, string oldname);
-	// 删除某用户
-	bool deleteUser(string name);
+	bool createAccount(string name, string passwd);
+
+    // 校验用户名、密码
+	// 0:校验成功 1:用户名不存在 2:密码错误 3:其它原因导致校验失败
+	int checkAccount(string name, string passwd);
+
 	// 输出所有表
 	void printAllTable();
 

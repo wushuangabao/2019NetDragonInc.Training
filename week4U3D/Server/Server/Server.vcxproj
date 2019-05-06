@@ -102,17 +102,20 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\mysql-5.7.25-winx64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\mysql-5.7.25-winx64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,7 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Chat.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="MySQL\ConnPool.h" />
     <ClInclude Include="MySQL\CSql.h" />
     <ClInclude Include="MySQL\DB.h" />
@@ -164,7 +167,7 @@
     <ClInclude Include="Socket\TCPSocket.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="MySQL\ConnPool.cpp" />
     <ClCompile Include="MySQL\CSql.cpp" />
     <ClCompile Include="MySQL\DB.cpp" />

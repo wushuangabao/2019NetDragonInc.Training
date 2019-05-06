@@ -27,10 +27,15 @@ public class CharacterControl : MonoBehaviour
     CapsuleCollider m_Capsule;
     bool m_Crouching;
 
-    float timer = 0.0f;
-    bool isFalling = false; //正在下坠
+    float timer = 0.0f; //滞空时间
+    float timerMove = 0.0f; //前进事件
     public GameObject pointFootLeft;
     public GameObject pointFootRight;
+    public AudioClip[] soundStep;
+    public AudioClip soundJump;
+    public AudioClip soundLand;
+    public AudioSource audioSource;
+
 
     void Start()
     {
@@ -132,9 +137,7 @@ public class CharacterControl : MonoBehaviour
         // calculate which leg is behind, so as to leave that leg trailing in the jump animation
         // (This code is reliant on the specific run cycle offset in our animations,
         // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-        float runCycle =
-            Mathf.Repeat(
-                m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
+        float runCycle = Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
         float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
         if (m_IsGrounded)
         {
@@ -166,8 +169,6 @@ public class CharacterControl : MonoBehaviour
             m_GroundCheckDistance = m_OrigGroundCheckDistance;
             // 计算空中下落的时间
             timer += Time.deltaTime;
-            if (!isFalling)
-                isFalling = true;
         }
         else
         {
@@ -187,6 +188,8 @@ public class CharacterControl : MonoBehaviour
             m_Animator.applyRootMotion = false;
             m_GroundCheckDistance = 0.1f;
             timer = 0.0f;
+            audioSource.pitch = 1;
+            audioSource.PlayOneShot(soundJump);
         }
     }
 
@@ -204,9 +207,15 @@ public class CharacterControl : MonoBehaviour
         // this allows us to modify the positional speed before it's applied.
         if (m_IsGrounded && Time.deltaTime > 0)
         {
+            //timerMove += Time.deltaTime;
+            //if (timerMove > 0.6f) 有bug，不能随着脚步发出声音
+            //{
+            //    timerMove = 0.0f;
+            //    int len = soundStep.Length;
+            //    audioSource.pitch = 2;
+            //    audioSource.PlayOneShot(soundStep[Random.Range(0, len)]);
+            //}
             Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
-
-            // we preserve the existing y part of the current velocity.
             v.y = m_Rigidbody.velocity.y;
             m_Rigidbody.velocity = v;
         }
@@ -229,19 +238,22 @@ public class CharacterControl : MonoBehaviour
             m_IsGrounded = true;
             m_Animator.applyRootMotion = true; //允许动画运动
 
-            // 坠落扣血相关：
-            isFalling = false;
-            if (timer > 0.8f)
-            {
-                if (timer < 1.2f)
+            // 坠落相关：
+            if (timer > 0.1f) {
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(soundLand);
+                if (timer > 0.8f)
                 {
-                    Blood.ShowBlood(0.2f);
-                    Health.Reduce(2);
-                }
-                else
-                {
-                    Blood.ShowBlood(0.4f);
-                    Health.Reduce(10);
+                    if (timer < 1.2f)
+                    {
+                        Blood.ShowBlood(0.2f);
+                        Health.Reduce(2);
+                    }
+                    else
+                    {
+                        Blood.ShowBlood(0.4f);
+                        Health.Reduce(10);
+                    }
                 }
             }
             timer = 0.0f;
@@ -253,4 +265,5 @@ public class CharacterControl : MonoBehaviour
             m_Animator.applyRootMotion = false; //禁止动画运动（只能原地播放）
         }
     }
+
 }

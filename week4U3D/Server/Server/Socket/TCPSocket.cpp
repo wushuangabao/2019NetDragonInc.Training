@@ -49,7 +49,7 @@ std::string DataSocket::ReceiveData()
 	received = recv(sock, buffer, 1024, 0);
 	if (received == -1)
 	{
-		strcpy(buffer, string("SocketClosed").c_str());
+		strcpy_s(buffer, 16, string("SocketClosed").c_str());
 	}
 	return std::string(buffer);
 }

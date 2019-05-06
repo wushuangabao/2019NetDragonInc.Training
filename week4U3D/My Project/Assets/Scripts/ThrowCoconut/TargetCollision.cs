@@ -15,10 +15,12 @@ public class TargetCollision : MonoBehaviour
     float timer = 0.0f;
     Animation anim;
     static int number = 0;
+    TriggerThrow trigger;
 
     void Start()
     {
         anim = transform.parent.transform.parent.GetComponent<Animation>();
+        trigger = transform.parent.transform.parent.transform.parent.Find("mat").GetComponent<TriggerThrow>();
     }
 
     void Update()
@@ -51,6 +53,8 @@ public class TargetCollision : MonoBehaviour
                 audioSource.PlayOneShot(soundWin);
                 GameObject.Destroy(cell_old);
                 cell_new.transform.position = positionNew;
+                trigger.onTrigger = false;
+                trigger.ExitThrow();
             }
         }
     }

@@ -52,112 +52,43 @@ void DB::printAllTable()
 	pool->retConnect(con);
 }
 
-////////////////////////////////
-/// 创建账户
-////////////////////////////////
-bool DB::createAccount(string name_s)
+// 创建账户
+bool DB::createAccount(string name_s, string passwd)
 {
 	// 从线程池中取出连接
 	CSql* c = pool->getConnect();
 
-	// 修改数据库提交模式为手动提交
-	if (c->openManuCommit())
+	char* name = (char*)name_s.c_str();
+	char* pswd = (char*)passwd.c_str();
+	MYSQL_BIND param[2];
+	memset(param, 0, sizeof(param));
+	param[0].buffer_type = MYSQL_TYPE_STRING;
+	param[0].buffer = name;
+	param[0].buffer_length = strlen(name);
+	param[1].buffer_type = MYSQL_TYPE_STRING;
+	param[1].buffer = pswd;
+	param[1].buffer_length = strlen(pswd);
+	string sql = "insert into user(user_name,pass_word) values(?,?);";
+	if (c->prepareStmt(sql, param))
 	{
-		// 开始事务处理
-		if (c->sql("start transaction;"))
-		{
-			char* name = (char*)name_s.c_str();
-			MYSQL_BIND param[1];
-			memset(param, 0, sizeof(param));
-			param[0].buffer_type = MYSQL_TYPE_STRING;
-			param[0].buffer = name;
-			param[0].buffer_length = strlen(name);
-
-			// 新增user记录
-			string sql = "insert into user(user_name) values(?);";
-			if (c->prepareStmt(sql, param))
-			{
-				// 新增role记录
-				string sql = "insert into role(user_name) values(?);";
-				if(c->prepareStmt(sql, param))
-				{ 
-					// 事务提交
-					if (c->commit())
-					{
-						c->openAutoCommit();
-						pool->retConnect(c);
-						return true;
-					}
-				}
-				else
-				{
-					// 事务回滚
-					c->rollBack();
-				}
-			}
-			else
-			{
-				// 事务回滚
-				c->rollBack();
-			}
-		}
+		pool->retConnect(c);
+		return true;
 	}
-	c->openAutoCommit();
-	pool->retConnect(c);
-	return false;
+	else
+	{
+		pool->retConnect(c);
+		return false;
+	}
 }
 
-//////////////////////////////
-/// 修改用户名
-//////////////////////////////
-bool DB::changeUserName(string newname, string oldname)
-{
-	// 从线程池中取出连接
-	CSql* c = pool->getConnect();
-
-	// 修改数据库提交模式为手动提交
-	if (c->openManuCommit())
-	{
-		// 开始事务处理
-		if (c->sql("start transaction;"))
-		{
-			char *nameNew = (char*)newname.c_str(),
-				*nameOld = (char*)oldname.c_str();
-			MYSQL_BIND params[2];
-			memset(params, 0, sizeof(params));
-			params[0].buffer_type = MYSQL_TYPE_STRING;
-			params[0].buffer = nameNew;
-			params[0].buffer_length = strlen(nameNew);
-			params[1].buffer_type = MYSQL_TYPE_STRING;
-			params[1].buffer = nameOld;
-			params[1].buffer_length = strlen(nameOld);
-			string sql = "update user set user_name=? where(user_name=?);";
-			if (c->prepareStmt(sql, params))
-			{
-				// 事务提交
-				if (c->commit())
-				{
-					c->openAutoCommit();
-					pool->retConnect(c);
-					return true;
-				}
-			}
-			else
-			{
-				// 事务回滚
-				c->rollBack();
-			}
-		}
-	}
-	c->openAutoCommit();
-	pool->retConnect(c);
-	return false;
-}
-
-////////////////////////////
-/// 删除用户数据
-////////////////////////////
-bool DB::deleteUser(string name)
+/**
+ * @brief 校验用户名、密码
+ *
+ * @param name 用户名
+ * @param passwd 密码
+ * @return int 0:校验成功 1:用户名不存在 2:密码错误 3:其它原因导致校验失败
+**/
+int DB::checkAccount(string name, string passwd)
 {
 	CSql* c = pool->getConnect();
 	if (c->openManuCommit())
@@ -165,32 +96,40 @@ bool DB::deleteUser(string name)
 		if (c->sql("start transaction;"))
 		{
 			string sql = "select * from user where(user_name='" + name + "');";
-			if (c->sql(sql)){
+			if (c->sql(sql)) {
 				// 查询name是否存在
-				if(c->putOutRes(false)>0){
-					sql = "delete from user where(user_name='" + name + "');";
+				if (c->putOutRes(false) == 1) {
+					sql = "select * from user where(user_name='" + name + "' and pass_word='" + passwd + "');";
 					if (c->sql(sql))
-						if (c->commit())
+						// 查询passwd是否存在
+						if (c->putOutRes(false) == 1)
 						{
 							c->openAutoCommit();
 							pool->retConnect(c);
-							return true;
+							return 0;
 						}
-						else
+						else {
 							c->rollBack();
+							cout << "密码错误！" << endl;
+							c->openAutoCommit();
+							pool->retConnect(c);
+							return 2;
+						}
 				}
 				else {
 					c->rollBack();
 					cout << "用户" << name << "不存在！" << endl;
+					c->openAutoCommit();
+					pool->retConnect(c);
+					return 1;
 				}
 			}
-			else
-				c->rollBack();
 		}
 	}
+	c->rollBack();
 	c->openAutoCommit();
 	pool->retConnect(c);
-	return false;
+	return 3;
 }
 
 // 获取系统时间

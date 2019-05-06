@@ -1,7 +1,7 @@
-﻿#include "Chat.h"
+﻿#include "Room.h"
 
 int main()
 {
-	Chat chatRoom;
-	chatRoom.CreateRoom();
+	Room room;
+	room.CreateRoom();
 }

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TriggerCampfire : MonoBehaviour
 {
     public ParticleSystem fire;
     public Image imgMatchbox;
+    public AudioSource audioSource;
+    public AudioClip soundWin;
 
     int i = 0;
     float timer = 0.0f;
@@ -25,6 +28,16 @@ public class TriggerCampfire : MonoBehaviour
             {
                 fire.gameObject.SetActive(true);
                 i++;   // i=3
+            }
+        }
+        else if (i == 3)
+        {
+            // 进入菜单场景
+            timer += Time.deltaTime;
+            if (timer > 1.0f)
+            {
+                audioSource.PlayOneShot(soundWin);
+                TextHint.SetHint("游戏暂时结束了，后续剧情敬请期待~");
             }
         }
     }

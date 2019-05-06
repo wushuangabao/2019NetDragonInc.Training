@@ -33,7 +33,7 @@ public class UserControl : MonoBehaviour
             // 更新MouseLook的角度
             m_MouseLook.LookRotation(transform, Camera.main.transform);
 
-            // 检测是否按下了跳跃键
+            // 检测是否开始跳跃
             if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
@@ -75,4 +75,5 @@ public class UserControl : MonoBehaviour
         // 更新鼠标锁
         m_MouseLook.UpdateCursorLock();
     }
+
 }

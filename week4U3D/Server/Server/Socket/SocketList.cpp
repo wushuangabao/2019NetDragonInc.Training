@@ -1,10 +1,12 @@
+#include <iostream>
 #include "SocketList.h"
 #include "json.hpp"
-#include "../Chat.h"
+#include "../Room.h"
 
+using namespace std;
 using json = nlohmann::json;
 
-SocketList::SocketList(bool IsServer, string ConnectIp)
+SocketList::SocketList()
 {
 	zerotime.tv_usec = 0;
 	zerotime.tv_sec = 0;
@@ -21,7 +23,7 @@ SocketList::~SocketList()
 	}
 }
 
-list<string> SocketList::Listening(Chat* chat,DataSocket **RecSocket)
+list<string> SocketList::Listening(Room* room,DataSocket **RecSocket)
 {
 	list<string> retDataList;
 
@@ -64,8 +66,8 @@ list<string> SocketList::Listening(Chat* chat,DataSocket **RecSocket)
 				if (mes == "SocketClosed")
 				{
 					std::cout << "用户" << (*itr)->userName << "的客户端关闭了" << std::endl;
-					chat->nameInRoom.remove((*itr)->userName);
-					chat->refreshNames();
+					room->nameInRoom.remove((*itr)->userName);
+					room->refreshNames();
 					delete (*itr);
 					itr = SerDatSockList.erase(itr);
 					if (itr == SerDatSockList.end())

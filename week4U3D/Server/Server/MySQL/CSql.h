@@ -38,6 +38,6 @@ public:
 	 *
 	 * @param b 是否输出到屏幕
 	 * @return 查询到的数据总数
-	 */
+	**/
 	unsigned int putOutRes(bool b = true);
 };

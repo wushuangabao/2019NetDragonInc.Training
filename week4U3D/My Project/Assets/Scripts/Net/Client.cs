@@ -8,22 +8,27 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using MiniJSON;
 
+
 public class Client : MonoBehaviour
 {
+    string myUserName;
+    string passWord;
+    bool isConnected = false;
+
     static Client _instance;
     static public Client Instance { get { return _instance; } }
 
     // 服务器IP地址、端口号
-    IPAddress ip = IPAddress.Parse("127.0.0.1");
-    int port = 4000;
+    readonly IPAddress ip = IPAddress.Parse("127.0.0.1");
+    readonly int port = 4000;
 
     Socket socket;
-    string username = "";
-    string msg = "";
     Thread thread;
 
     // 存储接受到的消息
     byte[] buffer = new byte[1024];
+    string username = "";
+    string msg = "";
 
     void Awake()
     {
@@ -31,29 +36,48 @@ public class Client : MonoBehaviour
         {
             _instance = this;
         }
+        // 防止载入新场景时被销毁
+        DontDestroyOnLoad(_instance.gameObject);
     }
 
     void Start()
     {
-        StartClient();
+        
     }
 
+    // （只能在主线程中操作游戏对象）
     void Update()
     {
-        // 消息显示（只能在主线程中操作游戏对象）
-        if (username != "" && msg != "")
+        // 消息显示
+        try
         {
-            ChatPanel.Instance.ShowInfo(username, msg);
-            username = "";
-            msg = "";
+            if (username != "" && msg != "")
+            {
+                ChatPanel.Instance.ShowInfo(username, msg);
+                username = "";
+                msg = "";
+            }
         }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+        
     }
 
     /// <summary>
     /// 建立客户端，连接到服务器
     /// </summary>
-    public void StartClient()
+    public void StartClient(string myName, string pswd)
     {
+        myUserName = myName;
+        passWord = pswd;
+        ChatPanel.Instance.SetUserName(myName);
+        if (isConnected)
+        {
+            SendLoginRequest();
+            return;
+        }
         IPEndPoint ipp = new IPEndPoint(ip, port);
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Debug.Log("建立客户端...");
@@ -151,17 +175,35 @@ public class Client : MonoBehaviour
         switch ((string)dict["str"])
         {
             case "Connected":
-                username = "Server";
-                msg = (string)dict["str"];
-                var d = new Dictionary<string, object>
-                {
-                    ["instruct"] = true,
-                    ["name"] = ChatPanel.Instance.GetUserName(),
-                    ["str"] = "connect"
-                };
-                SendInfo(d);
+                SendLoginRequest();
                 break;
         }
+    }
+
+    /// <summary>
+    /// 发送登录请求
+    /// </summary>
+    void SendLoginRequest()
+    {
+        username = "Server";
+        msg = "Already connected!";
+        isConnected = true;
+        var d = new Dictionary<string, object>
+        {
+            ["instruct"] = true,
+            ["name"] = myUserName,
+            ["pswd"] = passWord,
+            ["str"] = "connect"
+        };
+        SendInfo(d);
+    }
+
+    /// <summary>
+    /// 获取用户名
+    /// </summary>
+    public string GetUserName()
+    {
+        return myUserName;
     }
 
     /// <summary>
@@ -175,8 +217,9 @@ public class Client : MonoBehaviour
     /// <summary>
     /// 清理连接和线程
     /// </summary>
-    void Dispose()
+    public void Dispose()
     {
+        isConnected = false;
         // 终止线程
         if (thread != null)
         {
