@@ -66,8 +66,10 @@ list<string> SocketList::Listening(Room* room,DataSocket **RecSocket)
 				if (mes == "SocketClosed")
 				{
 					std::cout << "用户" << (*itr)->userName << "的客户端关闭了" << std::endl;
-					room->nameInRoom.remove((*itr)->userName);
-					room->refreshNames();
+					if (room->findName((*itr)->userName)) {
+						room->nameInRoom.remove((*itr)->userName);
+						room->refreshNames();
+					}
 					delete (*itr);
 					itr = SerDatSockList.erase(itr);
 					if (itr == SerDatSockList.end())

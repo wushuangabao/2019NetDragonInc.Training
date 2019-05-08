@@ -1,9 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <list>
 #include <string>
+#include "Socket/json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 class SocketList;
 class DataSocket;
@@ -14,24 +16,25 @@ class Room
 public:
 	Room();
 	~Room();
-	void CreateRoom();       //´´½¨·¿¼ä£¬´´½¨·şÎñÆ÷
-	void refreshNames();     //ÈÃ¿Í»§¶ËË¢ĞÂ·¿¼äÖĞËùÓĞÈËµÄÃû×Ö
-	void sendInfo(string s, bool toAll = true); //Ïò¿Í»§¶Ë·¢ËÍÏûÏ¢
+	void CreateRoom();       //åˆ›å»ºæˆ¿é—´ï¼Œåˆ›å»ºæœåŠ¡å™¨
+	void refreshNames();     //è®©å®¢æˆ·ç«¯åˆ·æ–°æˆ¿é—´ä¸­æ‰€æœ‰äººçš„åå­—
+	void sendInfo(string s, bool toAll = true); //å‘å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯
+	bool findName(string name);                 //æŸ¥æ‰¾nameæ˜¯å¦åœ¨æˆ¿é—´
 
-	list<string> nameInRoom; //±¾·¿¼äÖĞÓÃ»§Ãû×Ö¶ÓÁĞ
+	list<string> nameInRoom; //æœ¬æˆ¿é—´ä¸­ç”¨æˆ·åå­—é˜Ÿåˆ—
 
 private:
-	void Fresh();        //Ë¢ĞÂ
-	string allName();    //·¿¼äÖĞËùÓĞÈËµÄÃû×Ö
-	void putOutWords();  //ÏÔÊ¾ÏûÏ¢
-	void detectingMsg(); //¼àÌıÏûÏ¢
-	vector<string> SeparateMsg(string str);//²ğ°ü
-	bool detectingInstruct(string str);    //Ö¸Áî¼ì²âÓëÖ´ĞĞ
-	// Ğ£ÑéÓÃ»§Ãû¡¢ÃÜÂë
-	void checkAccount(string name, string pswd);
+	void Fresh();        //åˆ·æ–°
+	string allName();    //æˆ¿é—´ä¸­æ‰€æœ‰äººçš„åå­—
+	void putOutWords();  //æ˜¾ç¤ºæ¶ˆæ¯
+	void detectingMsg(); //ç›‘å¬æ¶ˆæ¯
+	vector<string> SeparateMsg(string str); //æ‹†åŒ…
+	bool detectingInstruct(json j); //æŒ‡ä»¤æ£€æµ‹ä¸æ‰§è¡Œ
+	void checkAccount(string name, string pswd); //æ ¡éªŒç”¨æˆ·åã€å¯†ç 
 
-	static SocketList* sockets; //±¾·¿¼äµÄSocketÍ¨ĞÅ½Ó¿Ú
-	DataSocket* RecSocket;      //±£´æ·¢À´ÏûÏ¢µÄSocket
-	list<string> RecStrList;    //½ÓÊÕµ½µÄÏûÏ¢¶ÓÁĞ
+	static SocketList* sockets; //æœ¬æˆ¿é—´çš„Socketé€šä¿¡æ¥å£
+	DataSocket* RecSocket;      //ä¿å­˜å‘æ¥æ¶ˆæ¯çš„Socket
+	list<string> RecStrList;    //æ¥æ”¶åˆ°çš„æ¶ˆæ¯é˜Ÿåˆ—
+	int size = 5;  //æˆ¿é—´äººæ•°ä¸Šé™
 	DB* db;
 };

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// TODO: 加入跑动时的声音
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Animator))]
@@ -19,7 +21,7 @@ public class CharacterControl : MonoBehaviour
     bool m_IsGrounded;
     float m_OrigGroundCheckDistance;
     const float k_Half = 0.5f;
-    float m_TurnAmount;
+    //float m_TurnAmount;
     float m_ForwardAmount;
     Vector3 m_GroundNormal;
     float m_CapsuleHeight;
@@ -28,7 +30,6 @@ public class CharacterControl : MonoBehaviour
     bool m_Crouching;
 
     float timer = 0.0f; //滞空时间
-    float timerMove = 0.0f; //前进事件
     public GameObject pointFootLeft;
     public GameObject pointFootRight;
     public AudioClip[] soundStep;
@@ -52,18 +53,13 @@ public class CharacterControl : MonoBehaviour
 
     public void Move(Vector3 move, bool crouch, bool jump)
     {
-
-        // convert the world relative moveInput vector into a local-relative
-        // turn amount and forward amount required to head in the desired
-        // direction.
+        // 将输入的move向量根据当前位置地面法向量进行转化
         if (move.magnitude > 1f) move.Normalize();
         move = transform.InverseTransformDirection(move);
         CheckGroundStatus();
         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-        m_TurnAmount = Mathf.Atan2(move.x, move.z);
+        //m_TurnAmount = Mathf.Atan2(move.x, move.z);
         m_ForwardAmount = move.z;
-
-        ApplyExtraTurnRotation();
 
         // control and velocity handling is different when grounded and airborne:
         if (m_IsGrounded)
@@ -126,7 +122,7 @@ public class CharacterControl : MonoBehaviour
     {
         // update the animator parameters
         m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
-        m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
+        //m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
         m_Animator.SetBool("Crouch", m_Crouching);
         m_Animator.SetBool("OnGround", m_IsGrounded);
         if (!m_IsGrounded)
@@ -188,16 +184,8 @@ public class CharacterControl : MonoBehaviour
             m_Animator.applyRootMotion = false;
             m_GroundCheckDistance = 0.1f;
             timer = 0.0f;
-            audioSource.pitch = 1;
             audioSource.PlayOneShot(soundJump);
         }
-    }
-
-    void ApplyExtraTurnRotation()
-    {
-        // help the character turn faster (this is in addition to root rotation in the animation)
-        float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
-        transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
     }
 
 
@@ -207,14 +195,6 @@ public class CharacterControl : MonoBehaviour
         // this allows us to modify the positional speed before it's applied.
         if (m_IsGrounded && Time.deltaTime > 0)
         {
-            //timerMove += Time.deltaTime;
-            //if (timerMove > 0.6f) 有bug，不能随着脚步发出声音
-            //{
-            //    timerMove = 0.0f;
-            //    int len = soundStep.Length;
-            //    audioSource.pitch = 2;
-            //    audioSource.PlayOneShot(soundStep[Random.Range(0, len)]);
-            //}
             Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
             v.y = m_Rigidbody.velocity.y;
             m_Rigidbody.velocity = v;
@@ -240,7 +220,6 @@ public class CharacterControl : MonoBehaviour
 
             // 坠落相关：
             if (timer > 0.1f) {
-                audioSource.pitch = 1;
                 audioSource.PlayOneShot(soundLand);
                 if (timer > 0.8f)
                 {

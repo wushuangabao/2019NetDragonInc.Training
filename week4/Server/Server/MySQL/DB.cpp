@@ -1,4 +1,4 @@
-#include <time.h>
+ï»¿#include <time.h>
 #include <iostream>
 #include "DB.h"
 #include "CSql.h"
@@ -18,7 +18,7 @@ DB::~DB()
 	delete pool;
 	pool = nullptr;
 	db = nullptr;
-	cout << "dbÒÑÏú»Ù£¡" << endl;
+	cout << "dbå·²é”€æ¯ï¼" << endl;
 }
 
 DB* DB::getInstance()
@@ -28,13 +28,13 @@ DB* DB::getInstance()
 	return db;
 }
 
-// Êä³öËùÓĞ±í
-void DB::printAllTable()
+// è¾“å‡ºæ‰€æœ‰è¡¨
+void DB::printAllTable() 
 {
-	// »ñÈ¡Á¬½Ó
+	// è·å–è¿æ¥
 	CSql* con = pool->getConnect();
 
-	cout << getTime() << " Êä³öÊı¾İ¿âchatÄÚÈİ£º" << endl;
+	cout << getTime() << " è¾“å‡ºæ•°æ®åº“chatå†…å®¹ï¼š" << endl;
 	cout << "----------- user ------------" << endl;
 	string tmp = "select * from user";
 	con->sql(tmp);
@@ -48,14 +48,14 @@ void DB::printAllTable()
 	con->sql(tmp);
 	con->putOutRes();
 
-	// ¹é»¹Á¬½Ó
+	// å½’è¿˜è¿æ¥
 	pool->retConnect(con);
 }
 
-// ´´½¨ÕË»§
+// åˆ›å»ºè´¦æˆ·
 bool DB::createAccount(string name_s, string passwd)
 {
-	// ´ÓÏß³Ì³ØÖĞÈ¡³öÁ¬½Ó
+	// ä»çº¿ç¨‹æ± ä¸­å–å‡ºè¿æ¥
 	CSql* c = pool->getConnect();
 
 	char* name = (char*)name_s.c_str();
@@ -82,11 +82,11 @@ bool DB::createAccount(string name_s, string passwd)
 }
 
 /**
- * @brief Ğ£ÑéÓÃ»§Ãû¡¢ÃÜÂë
+ * @brief æ ¡éªŒç”¨æˆ·åã€å¯†ç 
  *
- * @param name ÓÃ»§Ãû
- * @param passwd ÃÜÂë
- * @return int 0:Ğ£Ñé³É¹¦ 1:ÓÃ»§Ãû²»´æÔÚ 2:ÃÜÂë´íÎó 3:ÆäËüÔ­Òòµ¼ÖÂĞ£ÑéÊ§°Ü
+ * @param name ç”¨æˆ·å
+ * @param passwd å¯†ç 
+ * @return int 0:æ ¡éªŒæˆåŠŸ 1:ç”¨æˆ·åä¸å­˜åœ¨ 2:å¯†ç é”™è¯¯ 3:å…¶å®ƒåŸå› å¯¼è‡´æ ¡éªŒå¤±è´¥
 **/
 int DB::checkAccount(string name, string passwd)
 {
@@ -97,11 +97,11 @@ int DB::checkAccount(string name, string passwd)
 		{
 			string sql = "select * from user where(user_name='" + name + "');";
 			if (c->sql(sql)) {
-				// ²éÑ¯nameÊÇ·ñ´æÔÚ
+				// æŸ¥è¯¢nameæ˜¯å¦å­˜åœ¨
 				if (c->putOutRes(false) == 1) {
 					sql = "select * from user where(user_name='" + name + "' and pass_word='" + passwd + "');";
 					if (c->sql(sql))
-						// ²éÑ¯passwdÊÇ·ñ´æÔÚ
+						// æŸ¥è¯¢passwdæ˜¯å¦å­˜åœ¨
 						if (c->putOutRes(false) == 1)
 						{
 							c->openAutoCommit();
@@ -110,7 +110,7 @@ int DB::checkAccount(string name, string passwd)
 						}
 						else {
 							c->rollBack();
-							cout << "ÃÜÂë´íÎó£¡" << endl;
+							cout << "å¯†ç é”™è¯¯ï¼" << endl;
 							c->openAutoCommit();
 							pool->retConnect(c);
 							return 2;
@@ -118,7 +118,7 @@ int DB::checkAccount(string name, string passwd)
 				}
 				else {
 					c->rollBack();
-					cout << "ÓÃ»§" << name << "²»´æÔÚ£¡" << endl;
+					cout << "ç”¨æˆ·" << name << "ä¸å­˜åœ¨ï¼" << endl;
 					c->openAutoCommit();
 					pool->retConnect(c);
 					return 1;
@@ -132,7 +132,35 @@ int DB::checkAccount(string name, string passwd)
 	return 3;
 }
 
-// »ñÈ¡ÏµÍ³Ê±¼ä
+// æ–°å¢èŠå¤©è®°å½•
+ bool DB::createChatRecord(string name_s, string msg_s)
+ {
+	 //INSERT INTO `chat_record` (`time`, `user_name`, `msg`) VALUES ('2019-05-07 13:59:43', 'admin', 'å…„å¼Ÿä»¬åœ¨å—ï¼Ÿ')
+	 CSql* c = pool->getConnect();
+	 char* name = (char*)name_s.c_str();
+	 char* msg = (char*)msg_s.c_str();
+	 MYSQL_BIND param[2];
+	 memset(param, 0, sizeof(param));
+	 param[0].buffer_type = MYSQL_TYPE_STRING;
+	 param[0].buffer = name;
+	 param[0].buffer_length = strlen(name);
+	 param[1].buffer_type = MYSQL_TYPE_VARCHAR;
+	 param[1].buffer = msg;
+	 param[1].buffer_length = strlen(msg);
+	 string sql = "insert into chat_record(time,user_name,msg) values(\'" + getTime() + "\',?,?);";
+	 if (c->prepareStmt(sql, param))
+	 {
+		 pool->retConnect(c);
+		 return true;
+	 }
+	 else
+	 {
+		 pool->retConnect(c);
+		 return false;
+	 }
+ }
+
+// è·å–ç³»ç»Ÿæ—¶é—´
 string DB::getTime()
 {
 	char tmp[32];

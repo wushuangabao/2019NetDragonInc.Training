@@ -11,9 +11,13 @@ using MiniJSON;
 
 public class Client : MonoBehaviour
 {
+    Socket socket;
+    Thread thread;
     string myUserName;
     string passWord;
     bool isConnected = false;
+    bool inRoom = false;
+    bool enterIsland = false;
 
     static Client _instance;
     static public Client Instance { get { return _instance; } }
@@ -21,9 +25,6 @@ public class Client : MonoBehaviour
     // 服务器IP地址、端口号
     readonly IPAddress ip = IPAddress.Parse("127.0.0.1");
     readonly int port = 4000;
-
-    Socket socket;
-    Thread thread;
 
     // 存储接受到的消息
     byte[] buffer = new byte[1024];
@@ -54,6 +55,8 @@ public class Client : MonoBehaviour
             if (username != "" && msg != "")
             {
                 ChatPanel.Instance.ShowInfo(username, msg);
+                if (username == "Server" && msg == "Login successfully!")
+                    inRoom = true;
                 username = "";
                 msg = "";
             }
@@ -175,6 +178,9 @@ public class Client : MonoBehaviour
         switch ((string)dict["str"])
         {
             case "Connected":
+                isConnected = true;
+                username = "Server";
+                msg = "Already connected!";
                 SendLoginRequest();
                 break;
         }
@@ -185,9 +191,6 @@ public class Client : MonoBehaviour
     /// </summary>
     void SendLoginRequest()
     {
-        username = "Server";
-        msg = "Already connected!";
-        isConnected = true;
         var d = new Dictionary<string, object>
         {
             ["instruct"] = true,
@@ -207,6 +210,22 @@ public class Client : MonoBehaviour
     }
 
     /// <summary>
+    /// 是否登录成功
+    /// </summary>
+    public bool LoginRoom()
+    {
+        return inRoom;
+    }
+
+    /// <summary>
+    /// 进入联机战斗场景
+    /// </summary>
+    public void EnterIsland()
+    {
+        enterIsland = true;
+    }
+
+    /// <summary>
     /// 脚本的生命周期结束时
     /// </summary>
     void OnDestroy()
@@ -220,6 +239,7 @@ public class Client : MonoBehaviour
     public void Dispose()
     {
         isConnected = false;
+        inRoom = false;
         // 终止线程
         if (thread != null)
         {

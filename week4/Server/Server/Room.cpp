@@ -1,12 +1,10 @@
-#include <algorithm>
+ï»¿#include <algorithm>
 #include <iostream>
 #include "Socket/SocketList.h"
-#include "Socket/json.hpp"
 #include "Room.h"
 #include "MySQL/DB.h"
 
 using namespace std;
-using json = nlohmann::json;
 
 SocketList* Room::sockets = NULL;
 
@@ -34,7 +32,7 @@ void Room::Fresh()
 	}
 }
 
-// ¼àÌıÏûÏ¢
+// ç›‘å¬æ¶ˆæ¯
 void Room::detectingMsg()
 {
 	RecStrList = sockets->Listening(this,&RecSocket);
@@ -42,7 +40,7 @@ void Room::detectingMsg()
 		putOutWords();
 }
 
-// ·Ö¸îÊı¾İ°ü
+// åˆ†å‰²æ•°æ®åŒ…
 vector<string> Room::SeparateMsg(string str)
 {
 	vector<string> retStrVec;
@@ -57,17 +55,14 @@ vector<string> Room::SeparateMsg(string str)
 	return retStrVec;
 }
 
-// Ö´ĞĞÖ¸Áî
-bool Room::detectingInstruct(string rec_str)
+// æ‰§è¡ŒæŒ‡ä»¤
+bool Room::detectingInstruct(json j)
 {
-	if (rec_str == "")
-		return false;
 	try{
-		json j = json::parse(rec_str);
-		// ´¦Àí²»Í¬µÄÖ¸Áî£¨²Î¼û¡°Í¨Ñ¶Ğ­ÒéÎÄµµ¡±£©
+		// å¤„ç†ä¸åŒçš„æŒ‡ä»¤ï¼ˆå‚è§â€œé€šè®¯åè®®æ–‡æ¡£â€ï¼‰
 		if (j["instruct"]) {
 			string str = j["str"];
-			// connectÖ¸Áî
+			// connectæŒ‡ä»¤
 			if (str == "connect")
 			{
 				string name = j["name"],
@@ -79,21 +74,26 @@ bool Room::detectingInstruct(string rec_str)
 	}
 	catch (exception e) 
 	{
-		cout << "ÏûÏ¢½âÎöÊ§°Ü " << endl;
+		cout << "æŒ‡ä»¤è§£æå¤±è´¥ï¼" << endl;
 	}
 	return false;
 }
 
 void Room::checkAccount(string name, string pswd)
 {
-	// ²éÕÒnameÊÇ·ñÒÑ¾­ÒÑ¾­µÇÂ¼
-	list<string>::iterator iter = find(nameInRoom.begin(), nameInRoom.end(), name);
-	if (iter != nameInRoom.end())
+	// æ£€æŸ¥æˆ¿é—´æ˜¯å¦æ»¡å‘˜
+	if (size <= nameInRoom.size())
+	{
+		sendInfo("The room is already full!", false);
+		return;
+	}
+	// æŸ¥æ‰¾nameæ˜¯å¦å·²ç»å·²ç»ç™»å½•
+	if (findName(name))
 	{
 		sendInfo("User \"" + name + "\" is already in the room!", false);
 		return;
 	}
-	// ´ÓÊı¾İ¿â²éÕÒÓÃ»§ÃûºÍÃÜÂë
+	// ä»æ•°æ®åº“æŸ¥æ‰¾ç”¨æˆ·åå’Œå¯†ç 
 	int v = db->checkAccount(name, pswd);
 	if (v == 0) {
 		sendInfo("Login successfully!", false);
@@ -115,7 +115,7 @@ void Room::checkAccount(string name, string pswd)
 	}
 }
 
-// Êä³ö·¿¼äÖĞËùÓĞÈËµÄÃû×Ö
+// è¾“å‡ºæˆ¿é—´ä¸­æ‰€æœ‰äººçš„åå­—
 string Room::allName()
 {
 	string s = "The people in this room: ";
@@ -127,15 +127,15 @@ string Room::allName()
 	return s;
 }
 
-// Ë¢ĞÂ·¿¼äÖĞËùÓĞÈËµÄÃû×Ö£¨²¢¹ã²¥¸ø¿Í»§¶Ë£©
+// åˆ·æ–°æˆ¿é—´ä¸­æ‰€æœ‰äººçš„åå­—ï¼ˆå¹¶å¹¿æ’­ç»™å®¢æˆ·ç«¯ï¼‰
 void Room::refreshNames()
 {
 	sendInfo(allName());
 	cout << allName() << endl;
 }
 
-// Ïò¿Í»§¶Ë·¢ËÍÒ»ÌõÎÄ±¾
-// toAll true:¹ã²¥ fasle:·¢ËÍ¸øµ±Ç°RecSocket
+// å‘å®¢æˆ·ç«¯å‘é€ä¸€æ¡æ–‡æœ¬
+// toAll true:å¹¿æ’­ fasle:å‘é€ç»™å½“å‰RecSocket
 void Room::sendInfo(string s, bool toAll) {
 	json j = {
 		{"instruct",false},
@@ -149,16 +149,42 @@ void Room::sendInfo(string s, bool toAll) {
 		RecSocket->SendData(j.dump() + "#end#");
 }
 
-// ÏÔÊ¾¡¢´¦ÀíÏûÏ¢
+// æŸ¥æ‰¾nameæ˜¯å¦åœ¨æˆ¿é—´
+bool Room::findName(string name)
+{
+	list<string>::iterator iter = find(nameInRoom.begin(), nameInRoom.end(), name);
+	if (iter != nameInRoom.end())
+		return true;
+	else
+		return false;
+}
+
+// æ˜¾ç¤ºã€å¤„ç†æ¶ˆæ¯
 void Room::putOutWords()
 {
+	json j;
 	for (list<string>::iterator itr = RecStrList.begin(); itr != RecStrList.end(); itr++)
 	{
 		vector<string> msgVector = SeparateMsg(*itr);
 		for (vector<string>::iterator it = msgVector.begin(); it != msgVector.end(); it++)
 		{
+			if (*it == "")
+				break;
+			// æ˜¾ç¤ºæ¶ˆæ¯
 			cout << *it << endl;
-			detectingInstruct(*it);
+			// è§£ææ¶ˆæ¯
+			try {
+				j = json::parse(*it);
+				// åˆ¤æ–­ã€å¤„ç†æŒ‡ä»¤
+				if (!detectingInstruct(j))
+				{
+					// case:ä¸æ˜¯æŒ‡ä»¤ï¼Œæ˜¯æ™®é€šèŠå¤©æ¶ˆæ¯
+					db->createChatRecord(j["name"], j["str"]);
+				}
+			}
+			catch (exception e) {
+				cout << "æ¶ˆæ¯è§£æå¤±è´¥ï¼" << endl;
+			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 using namespace std;
 
@@ -10,24 +10,27 @@ class DB
 public:
 	~DB();
 
-	// »ñÈ¡µ¥Àı¶ÔÏó
+	// è·å–å•ä¾‹å¯¹è±¡
 	static DB* getInstance();
 
-	// ´´½¨userÕË»§
+	// åˆ›å»ºuserè´¦æˆ·
 	bool createAccount(string name, string passwd);
 
-    // Ğ£ÑéÓÃ»§Ãû¡¢ÃÜÂë
-	// 0:Ğ£Ñé³É¹¦ 1:ÓÃ»§Ãû²»´æÔÚ 2:ÃÜÂë´íÎó 3:ÆäËüÔ­Òòµ¼ÖÂĞ£ÑéÊ§°Ü
+    // æ ¡éªŒç”¨æˆ·åã€å¯†ç 
+	// 0:æ ¡éªŒæˆåŠŸ 1:ç”¨æˆ·åä¸å­˜åœ¨ 2:å¯†ç é”™è¯¯ 3:å…¶å®ƒåŸå› å¯¼è‡´æ ¡éªŒå¤±è´¥
 	int checkAccount(string name, string passwd);
 
-	// Êä³öËùÓĞ±í
+	// æ–°å¢èŠå¤©è®°å½•
+	bool createChatRecord(string name,string msg);
+
+	// è¾“å‡ºæ‰€æœ‰è¡¨
 	void printAllTable();
 
 private:
-	// SQL²Ù×÷Àà
+	// SQLæ“ä½œç±»
 	friend CSql;
 
-	// Êı¾İ¿â
+	// æ•°æ®åº“
 	DB();
 	static DB* db;
 	string username = "root";
@@ -36,10 +39,10 @@ private:
 	string dbname = "game";
 	int port = 3306;
 
-	// Á¬½Ó³Ø
+	// è¿æ¥æ± 
 	ConnPool* pool;
-	int poolSize = 5; //´óĞ¡Îª5
+	int poolSize = 7; //å¤§å°ä¸º7
 	
-	// »ñÈ¡ÏµÍ³Ê±¼ä
+	// è·å–ç³»ç»Ÿæ—¶é—´
 	string getTime();
 };
