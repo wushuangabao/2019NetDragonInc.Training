@@ -65,15 +65,15 @@ public class UserControl : MonoBehaviour
             m_Move = v * Vector3.forward;
         }
 
-        // 按左Shift: 步行
-        //if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-
-        // 将参数传递到CharacterControl脚本
-        m_Character.Move(m_Move, crouch, m_Jump);
-
-        // 将操作参数发送到服务器
-        if (Client.Instance.LoginRoom())
-            Player.Instance.Manipulate(Client.Instance.GetUserName(), m_Move, crouch, m_Jump);
+        if (Client.Instance.enterIsland)
+        {
+            // 将操作参数发送到服务器
+            if(m_Move.x!=0 || m_Move.y != 0 || m_Move.z != 0 || crouch!=false || m_Jump!=false)
+                Client.Instance.Manipulate(m_Move, crouch, m_Jump);
+        }
+        else
+            // 将参数传递到CharacterControl脚本
+            m_Character.Move(m_Move, crouch, m_Jump);
 
         m_Jump = false;
 

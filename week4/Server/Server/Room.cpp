@@ -69,6 +69,14 @@ bool Room::detectingInstruct(json j)
 					pswd = j["pswd"];
 				checkAccount(name, pswd);
 			}
+			// manipulate指令
+			else if (str == "manipulate")
+			{
+				// 数据库manipulate表增添记录
+
+				// 广播指令
+				sockets->SendToAllClient(j.dump() + "#end#");
+			}
 			return true;
 		}
 	}
@@ -180,6 +188,7 @@ void Room::putOutWords()
 				{
 					// case:不是指令，是普通聊天消息
 					db->createChatRecord(j["name"], j["str"]);
+					sockets->SendToAllClient(*it + "#end#");
 				}
 			}
 			catch (exception e) {

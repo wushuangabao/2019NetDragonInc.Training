@@ -27,7 +27,7 @@ public class EnterGame : MonoBehaviour
                 if (Client.Instance.LoginRoom())
                 {
                     SceneManager.LoadScene("Island");
-                    Client.Instance.EnterIsland();
+                    Client.Instance.enterIsland = true;
                 }
                 else
                 {

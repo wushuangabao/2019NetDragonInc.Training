@@ -17,7 +17,7 @@ public class Client : MonoBehaviour
     string passWord;
     bool isConnected = false;
     bool inRoom = false;
-    bool enterIsland = false;
+    public bool enterIsland = false;
 
     static Client _instance;
     static public Client Instance { get { return _instance; } }
@@ -28,8 +28,8 @@ public class Client : MonoBehaviour
 
     // 存储接受到的消息
     byte[] buffer = new byte[1024];
-    string username = "";
-    string msg = "";
+    List<string> username = new List<string>();
+    List<string> msg = new List<string>();
 
     void Awake()
     {
@@ -52,13 +52,13 @@ public class Client : MonoBehaviour
         // 消息显示
         try
         {
-            if (username != "" && msg != "")
+            int len = username.Count;
+            if (len>0)
             {
-                ChatPanel.Instance.ShowInfo(username, msg);
-                if (username == "Server" && msg == "Login successfully!")
-                    inRoom = true;
-                username = "";
-                msg = "";
+                for(int i=0;i<len;i++)
+                    ChatPanel.Instance.ShowInfo(username[i], msg[i]);
+                username.Clear();
+                msg.Clear();
             }
         }
         catch (Exception e)
@@ -106,7 +106,7 @@ public class Client : MonoBehaviour
     /// </summary>
     public void SendInfo(Dictionary<string, object> dict)
     {
-        string s = Json.Serialize(dict);
+        string s = Json.Serialize(dict) + "#end#";
         Debug.Log("发送消息：" + s);
         socket.Send(Encoding.UTF8.GetBytes(s));
     }
@@ -138,9 +138,10 @@ public class Client : MonoBehaviour
             catch (Exception)
             {
                 Dispose();
+                Debug.Log("产生错误，客户端已关闭！");
                 break;
             }
-            Thread.Sleep(100);
+            //Thread.Sleep(99);
         }
     }
 
@@ -161,8 +162,11 @@ public class Client : MonoBehaviour
             // case: 非指令
             if (!(bool)dict["instruct"])
             {
-                username = (string)dict["name"];
-                msg = (string)dict["str"];
+                string n = (string)dict["name"], m = (string)dict["str"];
+                if (n == "Server" &&( m == "Login successfully!" || m == "User \"" + myUserName + "\" is already in the room!"))
+                    inRoom = true;
+                username.Add(n);
+                msg.Add(m);
             }
             // case: 指令
             else
@@ -179,9 +183,15 @@ public class Client : MonoBehaviour
         {
             case "Connected":
                 isConnected = true;
-                username = "Server";
-                msg = "Already connected!";
+                username.Add("Server");
+                msg.Add("已连接到服务器。");
                 SendLoginRequest();
+                break;
+            case "manipulate":
+                MultiPlayers.Instance.Manipulate(dict);
+                break;
+            case "Update":
+
                 break;
         }
     }
@@ -202,6 +212,25 @@ public class Client : MonoBehaviour
     }
 
     /// <summary>
+    /// 向服务器传递玩家的操作
+    /// </summary>
+    public void Manipulate(Vector3 move, bool crouch, bool jump)
+    {
+        var d = new Dictionary<string, object>
+        {
+            ["instruct"] = true,
+            ["str"]="manipulate",
+            ["name"] = myUserName,
+            ["moveX"] = (int)(move.x * 100000),
+            ["moveY"] = (int)(move.y * 100000),
+            ["moveZ"] = (int)(move.z * 100000),
+            ["c"] = crouch,
+            ["j"] = jump
+        };
+        SendInfo(d);
+    }
+
+    /// <summary>
     /// 获取用户名
     /// </summary>
     public string GetUserName()
@@ -215,14 +244,6 @@ public class Client : MonoBehaviour
     public bool LoginRoom()
     {
         return inRoom;
-    }
-
-    /// <summary>
-    /// 进入联机战斗场景
-    /// </summary>
-    public void EnterIsland()
-    {
-        enterIsland = true;
     }
 
     /// <summary>

@@ -84,9 +84,6 @@ list<string> SocketList::Listening(Room* room,DataSocket **RecSocket)
 				}
 			}
 		}
-		// 广播消息表
-		if (retDataList.size() != 0)
-			SendToAllClient(retDataList);
 	}
 	return retDataList;
 }
