@@ -68,7 +68,7 @@ public class UserControl : MonoBehaviour
         if (Client.Instance.enterIsland)
         {
             // 将操作参数发送到服务器
-            if(m_Move.x!=0 || m_Move.y != 0 || m_Move.z != 0 || crouch!=false || m_Jump!=false)
+            if (m_Move.x != 0 || m_Move.y != 0 || m_Move.z != 0 || crouch != false || m_Jump != false)
                 Client.Instance.Manipulate(m_Move, crouch, m_Jump);
         }
         else

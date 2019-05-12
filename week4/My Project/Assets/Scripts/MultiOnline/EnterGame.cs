@@ -24,7 +24,7 @@ public class EnterGame : MonoBehaviour
             if (textBtnOffline.text == "开始游戏")
             {
                 // 进入联机模式
-                if (Client.Instance.LoginRoom())
+                if (Client.Instance.inRoom)
                 {
                     SceneManager.LoadScene("Island");
                     Client.Instance.enterIsland = true;

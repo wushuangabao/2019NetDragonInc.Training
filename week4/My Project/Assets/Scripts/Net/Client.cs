@@ -16,7 +16,7 @@ public class Client : MonoBehaviour
     string myUserName;
     string passWord;
     bool isConnected = false;
-    bool inRoom = false;
+    public bool inRoom = false;
     public bool enterIsland = false;
 
     static Client _instance;
@@ -107,7 +107,7 @@ public class Client : MonoBehaviour
     public void SendInfo(Dictionary<string, object> dict)
     {
         string s = Json.Serialize(dict) + "#end#";
-        Debug.Log("发送消息：" + s);
+        //Debug.Log("发送消息：" + s);
         socket.Send(Encoding.UTF8.GetBytes(s));
     }
 
@@ -135,11 +135,9 @@ public class Client : MonoBehaviour
                     ParseData(data);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Dispose();
-                Debug.Log("产生错误，客户端已关闭！");
-                break;
+                Debug.Log("接收消息时产生错误！" + e.ToString());
             }
             //Thread.Sleep(99);
         }
@@ -163,8 +161,11 @@ public class Client : MonoBehaviour
             if (!(bool)dict["instruct"])
             {
                 string n = (string)dict["name"], m = (string)dict["str"];
-                if (n == "Server" &&( m == "Login successfully!" || m == "User \"" + myUserName + "\" is already in the room!"))
+                if (n == "Server" && (m == "Login successfully!" || m == "User \"" + myUserName + "\" is already in the room!"))
+                {
                     inRoom = true;
+                    ChatPanel.Instance.SetUserName(myUserName);
+                }
                 username.Add(n);
                 msg.Add(m);
             }
@@ -188,10 +189,12 @@ public class Client : MonoBehaviour
                 SendLoginRequest();
                 break;
             case "manipulate":
-                MultiPlayers.Instance.Manipulate(dict);
+                if (enterIsland)
+                    MultiPlayers.Instance.Manipulate(dict);
                 break;
-            case "Update":
-
+            case "update":
+                if (enterIsland)
+                    MultiPlayers.Instance.UpdateState(dict);
                 break;
         }
     }
@@ -212,6 +215,27 @@ public class Client : MonoBehaviour
     }
 
     /// <summary>
+    /// 向服务器传递玩家的状态
+    /// </summary>
+    public void Upadate(int health, Vector3 p, Vector3 r)
+    {
+        var d = new Dictionary<string, object>
+        {
+            ["instruct"] = true,
+            ["str"] = "update",
+            ["name"] = myUserName,
+            ["h"] = health,
+            ["pX"] = p.x,
+            ["pY"] = p.y,
+            ["pZ"] = p.z,
+            ["rX"] = r.x,
+            ["rY"] = r.y,
+            ["rZ"] = r.z
+        };
+        SendInfo(d);
+    }
+
+    /// <summary>
     /// 向服务器传递玩家的操作
     /// </summary>
     public void Manipulate(Vector3 move, bool crouch, bool jump)
@@ -221,9 +245,9 @@ public class Client : MonoBehaviour
             ["instruct"] = true,
             ["str"]="manipulate",
             ["name"] = myUserName,
-            ["moveX"] = (int)(move.x * 100000),
-            ["moveY"] = (int)(move.y * 100000),
-            ["moveZ"] = (int)(move.z * 100000),
+            ["moveX"] = move.x,
+            ["moveY"] = move.y,
+            ["moveZ"] = move.z,
             ["c"] = crouch,
             ["j"] = jump
         };
@@ -236,14 +260,6 @@ public class Client : MonoBehaviour
     public string GetUserName()
     {
         return myUserName;
-    }
-
-    /// <summary>
-    /// 是否登录成功
-    /// </summary>
-    public bool LoginRoom()
-    {
-        return inRoom;
     }
 
     /// <summary>

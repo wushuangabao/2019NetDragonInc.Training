@@ -16,8 +16,6 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] float m_AnimSpeedMultiplier = 1f;
     [SerializeField] float m_GroundCheckDistance = 0.4f;
 
-    Rigidbody m_Rigidbody;
-    Animator m_Animator;
     bool m_IsGrounded;
     float m_OrigGroundCheckDistance;
     const float k_Half = 0.5f;
@@ -26,7 +24,6 @@ public class CharacterControl : MonoBehaviour
     Vector3 m_GroundNormal;
     float m_CapsuleHeight;
     Vector3 m_CapsuleCenter;
-    CapsuleCollider m_Capsule;
     bool m_Crouching;
 
     float timer = 0.0f; //滞空时间
@@ -36,13 +33,13 @@ public class CharacterControl : MonoBehaviour
     public AudioClip soundJump;
     public AudioClip soundLand;
     public AudioSource audioSource;
+    public Rigidbody m_Rigidbody;
+    public Animator m_Animator;
+    public CapsuleCollider m_Capsule;
 
 
     void Start()
     {
-        m_Animator = GetComponent<Animator>();
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_Capsule = GetComponent<CapsuleCollider>();
         m_CapsuleHeight = m_Capsule.height;
         m_CapsuleCenter = m_Capsule.center;
 

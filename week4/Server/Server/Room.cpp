@@ -77,6 +77,14 @@ bool Room::detectingInstruct(json j)
 				// 广播指令
 				sockets->SendToAllClient(j.dump() + "#end#");
 			}
+			// update指令
+			else if (str == "update")
+			{
+				// 数据库player_states表增添记录
+
+				// 广播指令
+				sockets->SendToAllClient(j.dump() + "#end#");
+			}
 			return true;
 		}
 	}

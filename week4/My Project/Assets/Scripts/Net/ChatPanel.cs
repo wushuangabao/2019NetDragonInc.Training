@@ -13,7 +13,7 @@ public class ChatPanel : MonoBehaviour
     public Text textChat;
 
     CanvasGroup canvasGroup;
-    string userName = "testUser";
+    string userName = "";
     string msg = "";
     bool isMenu = true; //是否处于菜单场景
 
@@ -41,7 +41,6 @@ public class ChatPanel : MonoBehaviour
             Hide(0.0f);
             GetComponentInChildren<Image>().color = Color.white;
             isMenu = true;
-            SetUserName(Client.Instance.GetUserName());
         }
         else
         {

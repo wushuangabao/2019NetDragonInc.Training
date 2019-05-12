@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,16 +6,34 @@ public class Player : MonoBehaviour
 {
     string m_Name = "";
     int health = 100;
-    CharacterControl m_Character;
+    public CharacterControl m_Character;
+    float timer = 0;
 
     void Start()
     {
-        m_Character = GetComponent<CharacterControl>();
     }
 
     void Update()
     {
-        
+        try
+        {
+            if (Client.Instance.enterIsland)
+            {
+                timer += Time.deltaTime;
+                // 每隔0.5秒上传玩家状态数据
+                if (timer > 0.5f)
+                {
+                    timer = 0f;
+                    Vector3 position = transform.localPosition,
+                        rotation = transform.localEulerAngles;
+                    Client.Instance.Upadate(health, position, rotation);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("上传状态数据失败：" + e.ToString());
+        }
     }
 
     public string GetName()
@@ -30,7 +48,10 @@ public class Player : MonoBehaviour
 
     public void Manipulate(Dictionary<string, object> d)
     {
-        Vector3 vectorMove = new Vector3((int)d["moveX"], (int)d["moveY"], (int)d["moveZ"]);
+        float x = System.Convert.ToSingle(d["moveX"]),
+            y = System.Convert.ToSingle(d["moveY"]),
+            z = System.Convert.ToSingle(d["moveZ"]);
+        Vector3 vectorMove = new Vector3(x, y, z);
         m_Character.Move(vectorMove, (bool)d["c"], (bool)d["j"]);
     }
 
@@ -41,13 +62,18 @@ public class Player : MonoBehaviour
 
     public void UpdateState(Dictionary<string, object> d)
     {
-        health = (int)d["h"];
-        float[] position = (float[])d["p"];
-        float[] rotation = (float[])d["r"];
-        ulong time = (ulong)d["t"];
-
-        UpdatePosition(new Vector3(position[0], position[1], position[2]));
-        transform.localEulerAngles = new Vector3(rotation[0], rotation[1], rotation[2]);
+        float x = System.Convert.ToSingle(d["pX"]),
+            y = System.Convert.ToSingle(d["pY"]),
+            z = System.Convert.ToSingle(d["pZ"]);
+        Vector3 position = new Vector3(x, y, z);
+        x = System.Convert.ToSingle(d["rX"]);
+        y = System.Convert.ToSingle(d["rY"]);
+            z = System.Convert.ToSingle(d["rZ"]);
+        Vector3 rotation = new Vector3(x, y, z);
+        //ulong time = (ulong)d["t"];
+        health = Convert.ToInt32(d["h"]);
+        UpdatePosition(position);
+        transform.localEulerAngles = rotation;
     }
 
 }
