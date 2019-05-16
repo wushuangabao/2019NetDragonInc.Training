@@ -66,12 +66,12 @@
 友情链接：
 
 - 菜鸟教程的[C++文档](http://www.runoob.com/cplusplus/cpp-tutorial.html)，专为初学者打造
-- 参加18年C++训练营时[我做的笔记整理](https://wushuangabao.github.io/Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
+- 参加18年C++训练营时[我做的笔记整理](http://prlll6e5r.bkt.clouddn.com//Cpp/C++%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97_index.html)
 - 微软Visual Studio的[C++语言reference](https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-language-reference)
 
 ## 2.1. 语言基础
 
-![阶段一任务卡片图](https://wushuangabao.github.io/img/netdragon/c1.png)
+![阶段一任务卡片图](http://prlll6e5r.bkt.clouddn.com/c1.png)
 
 ### 2.1.1. 题目
 
@@ -155,7 +155,7 @@ f)	“==”运算符
 
 ## 2.2. 网络编程
 
-![阶段二任务卡片图](https://wushuangabao.github.io/img/netdragon/c2.png)
+![阶段二任务卡片图](http://prlll6e5r.bkt.clouddn.com/c2.png)
 
 ### 2.2.1. 题目
 
@@ -182,7 +182,7 @@ f)	“==”运算符
 
 ## 2.3 数据库设计
 
-![阶段三任务卡片图](https://wushuangabao.github.io/img/netdragon/c3.png)
+![阶段三任务卡片图](http://prlll6e5r.bkt.clouddn.com/c3.png)
 
 ### 2.3.1. 题目
 
@@ -211,7 +211,7 @@ MySQL数据库设计：
 
 ## 2.4 游戏设计与实现
 
-![阶段四任务卡片图](https://wushuangabao.github.io/img/netdragon/c4.png)
+![阶段四任务卡片图](http://prlll6e5r.bkt.clouddn.com/c4.png)
 
 ### 2.4.1 题目
 
@@ -260,7 +260,7 @@ MySQL数据库设计：
 
 参考DOS游戏界面如下：
 
-![斗地主DOS界面](https://wushuangabao.github.io/img/netdragon/doudizhu.png)
+![斗地主DOS界面](http://prlll6e5r.bkt.clouddn.com/doudizhu.png)
 
 #### 2.4.1.3 坦克大战
 
@@ -324,7 +324,7 @@ MySQL数据库设计：
 
 ## 3.1. Csharp
 
-![阶段一任务卡片图](https://wushuangabao.github.io/img/netdragon/u1.png)
+![阶段一任务卡片图](http://prlll6e5r.bkt.clouddn.com/u1.png)
 
 ### 3.1.1. 题目
 用C# 实现一个小型连锁超市的库存管理，连锁超市在全国可能有多个仓库，可以查询指定仓库的商品库存情况，实现以下功能：
@@ -380,7 +380,7 @@ MySQL数据库设计：
 
 ## 3.2. U3D入门
 
-![阶段二任务卡片图](https://wushuangabao.github.io/img/netdragon/u2.png)
+![阶段二任务卡片图](http://prlll6e5r.bkt.clouddn.com/u2.png)
 
 ### 3.2.1. 题目
 
@@ -405,7 +405,7 @@ MySQL数据库设计：
 
 ## 3.3 U3D进阶
 
-![阶段三任务卡片图](https://wushuangabao.github.io/img/netdragon/u3.png)
+![阶段三任务卡片图](http://prlll6e5r.bkt.clouddn.com/u3.png)
 
 **课题要求：**
 
@@ -417,7 +417,7 @@ MySQL数据库设计：
 
 ## 3.4 终极任务
 
-![阶段四任务卡片图](https://wushuangabao.github.io/img/netdragon/u4.png)
+![阶段四任务卡片图](http://prlll6e5r.bkt.clouddn.com/u4.png)
 
 ### 3.4.1 课题要求
 

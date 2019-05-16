@@ -150,13 +150,13 @@ Proxy负责对真实角色的应用，把所有Subject定义的方法**限制委
 
 写完如上的文章之后，又隔了四五天时间（忙其他事情），我正式开始做任务了。
 
-首先我用一下午的时间，**挑重点地学习了一遍C#语言，做了一点[笔记](https://wushuangabao.github.io/CSharp/CSharpLanguage)**。
+首先我用一下午的时间，**挑重点地学习了一遍C#语言，做了一点[笔记](http://prlll6e5r.bkt.clouddn.com/CSharp/CSharpLanguage.html)**。
 
 然后直接开始着手写WinForm程序了。因为之前写过C#的AutoCAD插件，所以貌似速度还可以，只是MySQL的使用方法花了点时间去学习：
 
 在GitHub上clone了一个用到MySQL的C#项目，看着它的源码，边看边google那些不明含义的方法，差不多懂了。
 
-具体**实战中有很多犯错的地方，也[记录了下来](https://wushuangabao.github.io/CSharp/UseMySql)**。
+具体**实战中有很多犯错的地方，也[记录了下来](http://prlll6e5r.bkt.clouddn.com/CSharp/UseMySql.html)**。
 
 第三天（4月11日）中午，任务已经差不多完成了70%，由于我还有研究生项目和社会上的兼职工作要做，就暂停了，半成品的整个工程已上传至本目录。
 

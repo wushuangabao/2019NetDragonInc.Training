@@ -4,9 +4,9 @@
 
 详细资料见我的C++学习笔记：
 
-- [第三阶段任务（数据库）](https://wushuangabao.github.io/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BB%BB%E5%8A%A1%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89.html)
-- [第三阶段作业（数据库）环境设置](https://wushuangabao.github.io/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE.html)
-- [第三阶段作业（数据库）操作演示](https://wushuangabao.github.io/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89%E6%93%8D%E4%BD%9C%E6%BC%94%E7%A4%BA.html)
+- [第三阶段任务（数据库）](http://prlll6e5r.bkt.clouddn.com/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BB%BB%E5%8A%A1%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89.html)
+- [第三阶段作业（数据库）环境设置](http://prlll6e5r.bkt.clouddn.com/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE.html)
+- [第三阶段作业（数据库）操作演示](http://prlll6e5r.bkt.clouddn.com/Cpp/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E4%BD%9C%E4%B8%9A%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%89%E6%93%8D%E4%BD%9C%E6%BC%94%E7%A4%BA.html)
 
 ## myproject说明
 
