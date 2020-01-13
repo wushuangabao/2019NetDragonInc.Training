@@ -29,7 +29,7 @@
 思考下面这些代码。
 
     char c = 'A'; //存储单个字符
-    char* cp = &c; //等价于char * cp = &c;和char * cp = &c;
+    char* cp = &c; //等价于char * cp = &c;和char *cp = &c;
     bool isTrue = *cp == 'A'; //这里注意==运算符的优先级比=要高
 
     // 指针变量的赋值方式：
